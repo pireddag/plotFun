@@ -1,5 +1,5 @@
 # plotFun
-Plot functions with native TeXmacs graphics
+Plot functions with native TeXmacs graphics.
 
 The Scheme functions go in `.TeXmacs/progs/Graphics/Plotting/`
 
@@ -14,3 +14,5 @@ the range on which we want the plot, without spaces (the parser is very simple a
 example: -2.,2.
 
 The placement of the tick labels is done with a rough approximation (needs to be improved).
+
+There is a test file and its pdf output (test_plotting_Scheme.tm and test_plotting_Scheme.pdf)
