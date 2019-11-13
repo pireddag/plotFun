@@ -14,7 +14,9 @@
 ;;   (apply min (funValues fun range))); I wonder why min is not defined for lists
 
 (define (rescaleFun x xMin xMax sz)
-  (+ (- (/ (* 0.70 sz) 2)) (* (- x xMin) (/ (* 0.70 sz) (- xMax xMin))))) ; rescales x to the interval -sz/2, sz/2 considering xMax mapped to sz/2 and xMin to -sz/2
+  (+ (- (/ (* 0.61 sz) 2)) (* (- x xMin) (/ (* 0.70 sz) (- xMax xMin))))) ; rescales x to the interval -sz/2, sz/2 considering xMax mapped to sz/2 and xMin to -sz/2
+;; the 0.66 for the lower limit tries to make it so that the tick labels for the y-axis appear completely, but I need to rethink it completely
+;; (when the tick labels are shorter, I could leave more space for the graph). It is set so to fit numbers of three digits and a sign
 
 ;;(define (rescaleFun x xMin xMax sz)
 ;;  (* (- x xMin) (/ sz (- xMax xMin)))) ; rescales x to the interval 0, sz considering xMax mapped to sz and xMin to 0
