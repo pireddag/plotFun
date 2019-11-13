@@ -1,7 +1,7 @@
 # plotFun
 Plot functions with native TeXmacs graphics.
 
-The Scheme functions go in `.TeXmacs/progs/Graphics/Plotting/`
+The Scheme functions go in `.TeXmacs/progs/graphics/plotting/` (all lowercase!). I have already placed them in a directory with the right name and nesting, the tree `/graphics/plotting/` needs to be copied to the `prog` directory of TeXmacs.
 
 Load the package plotFun
 
