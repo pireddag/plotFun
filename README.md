@@ -18,8 +18,11 @@ There is a test file and its pdf output (test_plotting_Scheme.tm and test_plotti
 ## Security
 
 In order to run this macro in TeXmacs it is necessary to set the security level to "Accept all scripts".
+
 **One is then responsible for making sure that his TeXmacs documents are running only safe scripts!** 
+
 Unsafe scripts could delete all the data on your hard drive.
+
 Please see how to change TeXmacs security options in the TeXmacs manual (section 1, "User preferences", of the part "Configuring TeXmacs"). I am not writing it here so that a conscious effort on the part of the user is needed to change the setting.
 
 
