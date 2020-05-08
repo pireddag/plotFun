@@ -44,20 +44,20 @@
 (define (ticksXGraphics funS rangeS auxs)
   (let ((ticksGraphicsFun
 	 (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
-    (map ticksGraphicsFun (ticksXLines funS rangeS auxs))))
+    (map ticksGraphicsFun (ticksXLines auxs))))
 
 (define (ticksYGraphics funS rangeS auxs)
   (let ((ticksGraphicsFun
 	 (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
-    (map ticksGraphicsFun (ticksYLines funS rangeS auxs))))
+    (map ticksGraphicsFun (ticksYLines auxs))))
 
 (define (numbersXGraphics funS rangeS rangeY auxs)
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
-    (map numbersGraphicsFun (numbersXPoints funS rangeS rangeY auxs))))
+    (map numbersGraphicsFun (numbersXPoints auxs))))
 
 (define (numbersYGraphics funS rangeS rangeY auxs)
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
-	(map numbersGraphicsFun (numbersYPoints funS rangeS rangeY auxs))))
+	(map numbersGraphicsFun (numbersYPoints auxs))))
 
 
 (define (compose-graphics funS rangeS)

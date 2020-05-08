@@ -1,22 +1,33 @@
+;; Two functions for the pairs of points that mark the start and end of each tick
 
+(define (ticksXLineFun x limCoord rangeCoord factor)
+  (list
+   `(,x ,limCoord)
+   `(,x ,(+ limCoord (/ (width rangeCoord) factor)))))
+
+(define (ticksYLineFun y limCoord rangeCoord factor)
+  (list
+   `(,limCoord ,y)
+   `(,(+ limCoord (/ (width rangeCoord) factor)) ,y)))
 
 ;; List of points for axes and ticks
-(define (setTicksX range)
-  (setTicks range))
+;; (define (setTicksX range)
+;;   (setTicks range))
 
-(define (setTicksY funString range)
-  (let ((rangeY (calcRangeY funString range)))
-    (setTicks rangeY)))
+;; (define (setTicksY rangeY)
+;;     (setTicks rangeY))
 
-(define (ticksXPtsList funString range auxs) ; temporary function; probably better to rewrite ticks based on axis (not on function range), calculate only once rangeY
-  (let ((ticksX (setTicksX range))
-	(rangeY (calcRangeY funString range))
-	(limY (car (axLimsY auxs)))) ; the axis limits too should be calculated only once
-	(let ((ticksLineFun (lambda (x) (list  `(,x ,limY) `(,x ,(+ limY (/ (width rangeY) 20))))))) ; I need to define this function apart (legibility of code)
-					; the length of the ticks is 15 time smaller than the y-range (I have to make sure x- and y- ticks are the same.
-					; Probably best to define their lengths in terms of the length of the scaled axes)
-	  (begin
-	    ;; (display "\n calculating ticks \n")
+(define (ticksXPtsList auxs) ; temporary function; probably better to rewrite ticks based on axis (not on function range), calculate only once rangeY
+  (let* ((rangeX (cdr (assoc "rangeX" auxs)))
+	 (rangeY (cdr (assoc "rangeY" auxs)))
+	 (ticksX (setTicks rangeX))
+	 (limY (car (axLimsY auxs))); the axis limits too should be calculated only once
+	 (tksLineFun (lambda (x) (ticksXLineFun x limY rangeY 20))))
+    ;; the length of the ticks is 20 time smaller than the y-range
+    ;; (I have to make sure x- and y- ticks are the same.
+    ;; Probably best to define their lengths in terms of the length of the scaled axes)
+	 (map tksLineFun ticksX)))
+    	    ;; (display "\n calculating ticks \n")
 	    ;; (display "y limit \n")
 	    ;; (display limY)
 	    ;; (display "\n")
@@ -24,26 +35,26 @@
 	    ;; (display ticksX)
 	    ;; (display "ticks length \n")
 	    ;; (display  (/ (width range) 20))
-	    (map ticksLineFun ticksX)))))
 
-(define (ticksYPtsList funString range auxs) ; temporary function; probably better to rewrite ticks based on axis (not on function range), calculate only once rangeY
-  (let ((ticksY (setTicksY funString range))
-	(rangeY (calcRangeY funString range))
-	(limX (car (axLimsX auxs)))) ; the axis limits too should be calculated only once
-	(let ((ticksLineFun (lambda (x) (list  `(,limX ,x) `(,(+ limX (/ (width range) (* 20 1.5))) ,x))))) ; I need to define this function apart (legibility of code)
-					; the length of the ticks is defined so to be equal to the length of the ticks for the x-axis
-	  (begin
+(define (ticksYPtsList auxs) ; temporary function; probably better to rewrite ticks based on axis (not on function range), calculate only once rangeY
+  (let* ((rangeX (cdr (assoc "rangeX" auxs)))
+	 (rangeY (cdr (assoc "rangeY" auxs)))
+	 (ticksY (setTicks rangeY))
+	 (limX (car (axLimsX auxs))); the axis limits too should be calculated only once
+	 (tksLineFun (lambda (x) (ticksYLineFun x limX rangeX (* 20 1.5)))))
+    ;; the length of the ticks is defined so to be equal to the length of the ticks for the x-axis (therefore the scaling factor is (* 20 1.5)
+    (map tksLineFun ticksY)))
 	    ;; (display "\n calculating ticks \n")
 	    ;; (display "x limit")
-	    (map ticksLineFun ticksY)))))
 
 
-(define (ticksXLines funString range auxs)
-  (let ((ticksPtLst (ticksXPtsList funString range auxs))
-	(lineFun (lambda (x) (append '(line) (map list->pt (rescalePairsRef x (ptlist funString range)))))))
-					; the relative rescaling function could be defined once for all
-					; instead of being recalculated each time
-    (begin
+(define (ticksXLines auxs)
+  (let ((ticksPtLst (ticksXPtsList auxs))
+	(lineFun (lambda (x)
+		   (append '(line)
+			   (map list->pt
+				(rescalePairs x auxs))))))
+    (map lineFun ticksPtLst)))
       ;; (display "\n scaling ticks \n")
       ;; (display "\n original ticks \n")
       ;; (display ticksPtLst)
@@ -51,19 +62,18 @@
       ;; (display range)
       ;; (display "\n scaled ticks \n")
       ;; (display  (map lineFun ticksPtLst))
-      (map lineFun ticksPtLst))))
 
-(define (ticksYLines funString range auxs)
-  (let ((ticksPtLst (ticksYPtsList funString range auxs))
-	(lineFun (lambda (x) (append '(line) (map list->pt (rescalePairsRef x (ptlist funString range)))))))
-					; the relative rescaling function could be defined once for all
-					; instead of being recalculated each time
-    (begin
-      ;; (display "\n scaling ticks \n")
+(define (ticksYLines auxs)
+  (let ((ticksPtLst (ticksYPtsList auxs))
+	(lineFun (lambda (x)
+		   (append '(line)
+			   (map list->pt
+				(rescalePairs x auxs))))))
+    (map lineFun ticksPtLst)))
+  ;; (display "\n scaling ticks \n")
       ;; (display "\n original ticks \n")
       ;; (display ticksPtLst)
       ;; (display "\n range \n")
       ;; (display range)
       ;; (display "\n scaled ticks \n")
       ;; (display  (map lineFun ticksPtLst))
-      (map lineFun ticksPtLst))))
