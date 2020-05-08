@@ -1,4 +1,4 @@
-(texmacs-module (graphics plotting_working plotFun))
+(texmacs-module (graphics plotting_working_02 plotFun))
 
 (load "graphicsDefinitions.scm")
 (load "setPoints.scm")
@@ -37,58 +37,65 @@
     ;; (display "\n")
     ;;(display  (append `(line) (map list->pt (ptlist fun))))
     ;; (append `(spline) (map list->pt (ptlist fun range))))) ; without rescaling
-    (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs))))) ; with rescaling
+    ;; read file
+      (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs)))))	        ; with rescaling
 
 ;;;
 
-(define (ticksXGraphics funS rangeS auxs)
+(define (ticksXGraphics auxs)
   (let ((ticksGraphicsFun
 	 (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
     (map ticksGraphicsFun (ticksXLines auxs))))
 
-(define (ticksYGraphics funS rangeS auxs)
+(define (ticksYGraphics auxs)
   (let ((ticksGraphicsFun
 	 (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
     (map ticksGraphicsFun (ticksYLines auxs))))
 
-(define (numbersXGraphics funS rangeS rangeY auxs)
+(define (numbersXGraphics auxs)
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
     (map numbersGraphicsFun (numbersXPoints auxs))))
 
-(define (numbersYGraphics funS rangeS rangeY auxs)
+(define (numbersYGraphics auxs)
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
-	(map numbersGraphicsFun (numbersYPoints auxs))))
+    (map numbersGraphicsFun (numbersYPoints auxs))))
 
+;; overall graphics function
 
-(define (compose-graphics funS rangeS)
-  (let* ((fVals (funValues funS rangeS)) ; function values
-	 (rangeY  `(,(apply min fVals) ,(apply max fVals)))
-	 (auxs `(("rangeX" . ,rangeS)
-		 ("rangeY" . ,rangeY)
-		 ("fVals"  . ,fVals)))) ; range of function values 
+(define (compose-graphics fileS)
   (begin
-    ;; (display "\n testing graphics list \n")
-    ;; (display "\n x- ticks \n")
-    ;; (display  (ticksXGraphics funS rangeS))
-    ;; (display "\n y-ticks \n")
-    ;; (display  (ticksYGraphics funS rangeS))
-    (appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
-     (list
-      `(graphics
-	(with "color" "blue" "line-width" "1.5ln" ,(lineFun funS rangeS auxs))
-	(with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-	(with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-	(with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-	(with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
-      (ticksXGraphics funS rangeS auxs)
-      (ticksYGraphics funS rangeS auxs)
-      (numbersXGraphics funS rangeS rangeY auxs)
-      (numbersYGraphics funS rangeS rangeY auxs))))))
+    (load fileS)
+    (let* ((fun (cdr (assoc "function" (car graphsList))))
+	   (range (cdr (assoc "range" (car graphsList))))
+	   (fVals (funValues fun range)) ; function values
+	   (rangeX range)
+	   (rangeY  `(,(apply min fVals) ,(apply max fVals)))
+	   (auxs `(("rangeX" . ,rangeX)
+		   ("rangeY" . ,rangeY)
+		   ("fVals"  . ,fVals)))) ;function values (do I need it?)
+      (begin
+	;; (display "\n testing graphics list \n")
+	;; (display "\n x- ticks \n")
+	;; (display  (ticksXGraphics funS rangeS))
+	;; (display "\n y-ticks \n")
+	;; (display  (ticksYGraphics funS rangeS))
+	(appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
+	 (list
+	  `(graphics
+	    (with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs))
+	    (with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+	    (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+	    (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+	    (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
+	  (ticksXGraphics auxs)
+	  (ticksYGraphics auxs)
+	  (numbersXGraphics auxs)
+	  (numbersYGraphics auxs)))))))
 
+;;;
 
-(tm-define (plotFun fun range)
-	   (let* ((funS (tree->stree fun)) ; from tree to scheme-tree
-		 (rangeS (rangeString->list (tree->stree range)))) ; from tree to scheme-tree
+(tm-define (plotFun definitionFile)
+	   (let* ((fileS (tree->stree definitionFile))) ; from TeXmacs tree to scheme-tree
 	     (stree->tree
 	      `(with "gr-geometry" (tuple "geometry" "9cm" "6cm" "center")
-		     ,(compose-graphics funS rangeS)))))
+		     ,(compose-graphics fileS)))))

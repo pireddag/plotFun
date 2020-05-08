@@ -5,7 +5,7 @@
 
 
 (define (width range) ; takes for granted that the second element of range is larger than the first
-  (- (cadr range) (car range)))
+    (- (cadr range) (car range)))
 
 (define (step range)
   (/ (width range) 50)) ; set to 51 points per graph !! can be improved with an option
