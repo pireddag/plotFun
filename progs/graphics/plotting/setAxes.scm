@@ -1,68 +1,109 @@
-(define (axLimsX funString range)
-  (let ((margin (/ (width range) 10)))
-    `(,(- (car range) margin) ,(+ (cadr range) margin))))
+;;; Possible idea: calculate the points at the extremes of the axis, scale each of them, assemble them into axes
 
-(define (axLimsY funString range)
-  (let ((rangeY (calcRangeY funString range)))
-    (let ((margin (/ (width rangeY) 10)))
+;; !! See below:
+;; I am recalculating function values with (ptList funString range), I should do it only once
+;; Calculating function values only once will help with drawing more than one functio in the same graph
+
+
+;; !! margin for X: the same as in the other function (for list of points I think)?
+(define (axLimsX auxs) 
+  (let* ((rangeX (cdr (assoc "rangeX" auxs)))
+	 (margin (/ (width rangeX) 10)))
+    `(,(- (car rangeX) margin) ,(+ (cadr rangeX) margin))))
+
+;; !! margin for Y: the same as in the other function (for list of points I think)?
+;; !! rangeY: can it be calculated apart? Do I use it somewhere else?
+(define (axLimsY auxs)
+  (let* ((rangeY (cdr (assoc "rangeY" auxs)))
+	 (margin (/ (width rangeY) 10)))
     (begin
       ;; (display "\n ticks Y \n")
       ;; (display tksY)
       ;; (display "\n ax Y limits\n")
       ;; (display   `(,(car tksY) ,(lastElem tksY)))
       ;; (display "\n")
-       `(,(- (car rangeY) margin) ,(+ (cadr rangeY) margin))))))
+       `(,(- (car rangeY) margin) ,(+ (cadr rangeY) margin)))))
 
-(define (axPtsX funString range)
-  (let ((limsX (axLimsX funString range))
-	(limsY (axLimsY funString range)))
+;;; Function that give the axes with original values
+
+(define (axPtsX auxs)
+  (let* ((limsX (axLimsX auxs))
+	 (limsY (axLimsY auxs))
+	 (xMin (apply min limsX))
+	 (xMax (apply max limsX))
+	 (yMin (apply min limsY)))
     (begin
       ;; (display "\n ax points X \n")
       ;; (display  (list `( ,(car limsX) ,(car limsY)) `( ,(cadr limsX) ,(car limsY))))
       ;; (display "\n")
-      (list `( ,(car limsX) ,(car limsY)) `( ,(cadr limsX) ,(car limsY))))))
+      (list `( ,xMin ,yMin) `( ,xMax ,yMin)))))
 
-(define (axPtsXUp funString range) ; the upper X axis
-  (let ((limsX (axLimsX funString range))
-	(limsY (axLimsY funString range)))
+(define (axPtsXUp auxs) ; the upper X axis
+  (let ((limsX (axLimsX auxs))
+	(limsY (axLimsY auxs)))
     (begin
       ;; (display "\n ax points X \n")
       ;; (display  (list `( ,(car limsX) ,(car limsY)) `( ,(cadr limsX) ,(car limsY))))
       ;; (display "\n")
     (list `( ,(car limsX) ,(cadr limsY)) `( ,(cadr limsX) ,(cadr limsY))))))
 
-(define (axPtsY funString range)
-  (let ((limsX (axLimsX funString range))
-	(limsY (axLimsY funString range)))
+(define (axPtsY auxs)
+  (let ((limsX (axLimsX auxs))
+	(limsY (axLimsY auxs)))
     (begin
       ;; (display "\n ax points Y \n")
       ;; (display  (list `( ,(car limsX) ,(car limsY)) `( ,(car limsX) ,(cadr limsY))))
       ;; (display "\n")
       (list `( ,(car limsX) ,(car limsY)) `( ,(car limsX) ,(cadr limsY))))))
 
-(define (axPtsYRight funString range) ; the y axis on the right
-  (let ((limsX (axLimsX funString range))
-	(limsY (axLimsY funString range)))
+(define (axPtsYRight auxs) ; the y axis on the right
+  (let ((limsX (axLimsX auxs))
+	(limsY (axLimsY auxs)))
     (begin
       ;; (display "\n ax points Y \n")
       ;; (display  (list `( ,(car limsX) ,(car limsY)) `( ,(car limsX) ,(cadr limsY))))
       ;; (display "\n")
     (list `( ,(cadr limsX) ,(car limsY)) `( ,(cadr limsX) ,(cadr limsY))))))
 
+;;; Axes with rescaled values
 ;; the axes need to be rescaled to the function, not to themselves!
-;; I am recalculating function values with (ptList funString range), I should do it only once
-(define (axX funString range)
-  (let ((axPts (axPtsX funString range)))
-    (append '(line) (map list->pt (rescalePairsRef axPts (ptlist funString range)))))) ; uses szX (for x-axis scaling)
 
-(define (axXUp funString range)
-  (let ((axPts (axPtsXUp funString range)))
-    (append '(line) (map list->pt (rescalePairsRef axPts (ptlist funString range)))))) ; uses szX (for x-axis scaling)
+;; ?? Can I rescale each limit point of the axes, then assemble them?
+;; ?? Are the comments on using szX and szY correct? I am seeing the same command
+;; (rescalePairsRef axPts (ptlist funString range)) applied to different sets of points
+;; !! I am recalculating function values with (ptList funString range), I should do it only once
 
-(define (axY funString range)
-  (let ((axPts (axPtsY funString range)))
-    (append '(line) (map list->pt (rescalePairsRef axPts (ptlist funString range)))))) ; uses szY (for y-axis scaling)
+;; (define (axX funString range)
+;;   (let ((axPts (axPtsX funString range)))
+;;     (append '(line)
+;; 	    (map list->pt
+;; 		 (rescalePairsRef axPts (ptlist funString range))))))
+;; 					; uses szX (for x-axis scaling)
 
-(define (axYRight funString range)
-  (let ((axPts (axPtsYRight funString range)))
-    (append '(line) (map list->pt (rescalePairsRef axPts (ptlist funString range)))))) ; uses szY (for y-axis scaling)
+(define (axX auxs)
+   (let ((axPts (axPtsX auxs)))
+    (append '(line)
+	    (map list->pt
+		 (rescalePairs axPts auxs)))))
+					; uses szX (for x-axis scaling)
+
+(define (axXUp auxs)
+  (let ((axPts (axPtsXUp auxs)))
+    (append '(line)
+	    (map list->pt
+		 (rescalePairs axPts auxs)))))
+					; uses szX (for x-axis scaling)
+
+(define (axY auxs)
+  (let ((axPts (axPtsY auxs)))
+    (append '(line)
+	    (map list->pt
+		 (rescalePairs axPts auxs)))))
+					; uses szY (for y-axis scaling)
+
+(define (axYRight auxs)
+  (let ((axPts (axPtsYRight auxs)))
+    (append '(line)
+	    (map list->pt
+		 (rescalePairs axPts auxs)))))
+					; uses szY (for y-axis scaling)

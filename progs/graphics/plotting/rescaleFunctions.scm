@@ -13,18 +13,22 @@
 ;; (define (funMin fun range)
 ;;   (apply min (funValues fun range))); I wonder why min is not defined for lists
 
+;; rescaleFun rescales x to the interval -sz/2, sz/2 considering xMax mapped to sz/2 and xMin to -sz/2
 (define (rescaleFun x xMin xMax sz)
-  (+ (- (/ (* 0.61 sz) 2)) (* (- x xMin) (/ (* 0.70 sz) (- xMax xMin))))) ; rescales x to the interval -sz/2, sz/2 considering xMax mapped to sz/2 and xMin to -sz/2
-;; the 0.66 for the lower limit tries to make it so that the tick labels for the y-axis appear completely, but I need to rethink it completely
+  (+ (- (/ (* 0.61 sz) 2)) (* (- x xMin) (/ (* 0.70 sz) (- xMax xMin))))) 
+;; the 0.61 for the lower limit tries to make it so that the tick labels for the y-axis appear completely, but I need to rethink it completely
 ;; (when the tick labels are shorter, I could leave more space for the graph). It is set so to fit numbers of three digits and a sign
 
-;;(define (rescaleFun x xMin xMax sz)
-;;  (* (- x xMin) (/ sz (- xMax xMin)))) ; rescales x to the interval 0, sz considering xMax mapped to sz and xMin to 0
+;; (define (rescale vals sz range)
+;;   (let
+;;       ((valMin (apply min vals))
+;;        (valMax (apply max vals)))
+;;     (map (lambda (x) (rescaleFun x valMin valMax sz)) vals)))
 
-(define (rescale vals sz)
+(define (rescale vals sz range)
   (let
-      ((valMin (apply min vals))
-       (valMax (apply max vals)))
+      ((valMin (apply min range)) ;; why do I use apply
+       (valMax (apply max range)))
     (map (lambda (x) (rescaleFun x valMin valMax sz)) vals)))
 
 ;; rescale using as scale a reference list of values
@@ -35,22 +39,12 @@
        (valMax (apply max valsRef)))
      (map (lambda (x) (rescaleFun x valMin valMax sz)) vals)))
 
-(define (getXList pointsList)
-  (cond ((null? pointsList) '())
-	(else (cons (car (car pointsList)) (getXList (cdr pointsList))))))
-
-(define (getYList pointsList)
-  (cond ((null? pointsList) '())
-	(else (cons (cadr (car pointsList)) (getYList (cdr pointsList)))))) ; (cadr (car ...) gets the y element of the first element of the list
-
-(define (listPair xList yList) ; assuming xList and yList are lists of the same length, generates the list of pairs
-  (cond ((null? xList) '())
-	(else (cons `(,(car xList) ,(car yList)) (listPair (cdr xList) (cdr yList))))))
-
-(define (rescalePairs pointsList)
+(define (rescalePairs pointsList auxs)
   (let ((xList (getXList pointsList))
-	(yList (getYList pointsList))) ; szX and szY are defined globally
-    (listPair (rescale xList szX) (rescale yList szY))))
+	(yList (getYList pointsList))
+	(rangeX (cdr (assoc "rangeX" auxs)))
+	(rangeY (cdr (assoc "rangeY" auxs)))) ; szX and szY are defined globally
+    (listPair (rescale xList szX rangeX) (rescale yList szY rangeY))))
 
 ;; rescale pairs using as scale a reference list of values
 ;; I will use this to rescale axes around function values
@@ -58,5 +52,5 @@
   (let ((xList (getXList pointsList))
 	(yList (getYList pointsList))
 	(xListRef (getXList pointsListRef))
-	(yListRef (getYList pointsListRef)))				; szX and szY are defined globally
-    (listPair (rescaleRef xList xListRef szX) (rescaleRef yList yListRef szY))))
+	(yListRef (getYList pointsListRef)))
+    (listPair (rescaleRef xList xListRef szX) (rescaleRef yList yListRef szY)))) ; szX and szY are defined globally
