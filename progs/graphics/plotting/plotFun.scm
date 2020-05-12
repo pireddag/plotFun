@@ -1,4 +1,4 @@
-(texmacs-module (graphics plotting_working_02 plotFun))
+(texmacs-module (graphics plotting_working_04 plotFun))
 
 (load "graphicsDefinitions.scm")
 (load "setPoints.scm")
@@ -9,10 +9,33 @@
 (load "calculateTicks.scm")
 (load "setTicks.scm")
 (load "setNumbers.scm")
+(load "inputFromFile.scm")
 
-;; (define (ticksXGraphics funS rangeS)
-;;   (let ((ticksGraphicsFun (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
-;;     (map ticksGraphicsFun (ticksXLines funS rangeS))))
+
+;; https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
+(define (string->read text) ;renamed from read-string to avoid conflict with read-string of standard guile
+  (read
+   (open-input-string text)))
+
+(define diag '()) ;; diagnostics
+(define graphsListStr '()) ;; initialize to empty string in order to be able to place the symbol in the "safe" module we are going to set up
+;; it is then possible to set it to something else (we will set it to the association list in string form) before calling eval onto it
+
+(define (make-pure-math-module)
+  (let ((m (make-module)))
+    (begin
+      (module-define! m '* *)
+      (module-define! m '- -)
+      (module-define! m '+ +)
+      (module-define! m 'expt expt)
+      (module-define! m 'lambda lambda)
+      (module-define! m 'list list)
+      (module-define! m 'quote quote)
+      (module-define! m 'quasiquote quasiquote)
+      (module-define! m 'string->read string->read)
+      (module-define! m 'graphsListStr graphsListStr))
+    m))
+
 
 ;; A function that plots functions
 
@@ -38,7 +61,7 @@
     ;;(display  (append `(line) (map list->pt (ptlist fun))))
     ;; (append `(spline) (map list->pt (ptlist fun range))))) ; without rescaling
     ;; read file
-      (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs)))))	        ; with rescaling
+    (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs)))))	        ; with rescaling
 
 ;;;
 
@@ -63,9 +86,32 @@
 ;; overall graphics function
 
 (define (compose-graphics fileS)
-  (begin
-    (load fileS)
-    (let* ((fun (cdr (assoc "function" (car graphsList))))
+  (set! graphsListStr (call-with-input-file fileS
+			(lambda (dataPort) (readFile dataPort))))
+  ;; (display graphsListStr)
+  ;; define graphsList as
+  ;; (graphsList (eval (string->read graphsListStr) (make-pure-math-module))
+  ;; before running the commented lines
+    ;; do not need to quote (string->read graphsListStr) as it is a symbol
+    ;; see https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
+    ;; (set! diag graphsList)
+    ;; (display "\n")
+    ;; (display diag)
+    ;; (display "\n")
+    ;; (display (car diag))
+    ;; (display "\n")
+    ;; (display (list? diag))
+    ;; (display "\n")
+    ;; (display (cdr diag))
+    ;; (display "\n")
+    ;; (display "\n")
+  (let* ((graphsList (eval (string->read graphsListStr) (make-pure-math-module)))
+	     ;; do not need to quote (string->read graphsListStr) as it is a symbol
+    ;; see
+	   ;;(graphsList (list
+	   ;;		`(("function" . ,(lambda (x) ( - (expt x 2) 2.)))
+	   ;;		  ("range" . ,(list -2. 2.)))))
+	   (fun (cdr (assoc "function" (car graphsList)))) ; take just the first element at the moment, after the tests I wish to be able to plot several functions
 	   (range (cdr (assoc "range" (car graphsList))))
 	   (fVals (funValues fun range)) ; function values
 	   (rangeX range)
@@ -90,8 +136,7 @@
 	  (ticksXGraphics auxs)
 	  (ticksYGraphics auxs)
 	  (numbersXGraphics auxs)
-	  (numbersYGraphics auxs)))))))
-
+	  (numbersYGraphics auxs))))))
 ;;;
 
 (tm-define (plotFun definitionFile)
