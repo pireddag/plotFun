@@ -1,6 +1,6 @@
-(texmacs-module (graphics plotting plotFun)
-		(:use (graphics plotting defineFunctions)
-		      (graphics plotting setPoints)))
+(texmacs-module (graphics plotting_working_05 plotFun)
+		(:use (graphics plotting_working_05 defineFunctions)
+		      (graphics plotting_working_05 setPoints)))
 
 (load "graphicsDefinitions.scm")
 ;(load "setPoints.scm")
@@ -11,6 +11,7 @@
 (load "calculateTicks.scm")
 (load "setTicks.scm")
 (load "setNumbers.scm")
+(load "setColors.scm")
 (load "inputFromFile.scm")
 
 
@@ -90,6 +91,7 @@
     ;; read file
     (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs)))))	        ; with rescaling
 
+
 ;;;
 
 (define (ticksXGraphics auxs)
@@ -122,15 +124,18 @@
 ;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
 ;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
 
-(define (lineGraphics fun range auxs)
-  `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
+(define (lineGraphics fun range color auxs)
+  `(with "color" ,color "line-width" "1.5ln" ,(lineFun fun range auxs)))
 
+;; Mapping on several lists is standard in Scheme
+;; Note also https://stackoverflow.com/questions/38589238/how-to-use-map-with-a-function-that-needs-more-arguments
 (define (lineGraphicsAll graphsList auxs)
-  (map (lambda (x)
+  (let ((cList (colorListForThisPlot colorList graphsList)))
+  (map (lambda (x y)
 	 (let ((fun (cdr (assoc "function" x)))
 	       (range (cdr (assoc "range" x))))
-	   (lineGraphics fun range auxs)))
-       graphsList))
+	   (lineGraphics fun range y auxs)))
+       graphsList cList)))
 
 ;; (define (functionsGraphics graphsList auxs)
 ;;   (let ((fun (cdr (assoc "function" (car graphsList))))
