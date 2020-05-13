@@ -7,8 +7,9 @@
   Scheme>>
 
   Tests the version of the plotting software which loads the function
-  definitions from a file and uses sandboxed evaluation of the file contents.
-  Please adjust the file paths in the arguments according to where you place them
+  definitions from a file and uses sandboxed evaluation of the file contents;
+  please adjust the path of the file arguments according to where you put
+  them.
 
   <\big-figure>
     <plotFun|./fundefs_03.scm>
@@ -23,45 +24,6 @@
   <|big-figure>
     Two parabolae, a Gaussian and a sinusoid
   </big-figure>
-
-  <section*|Errors with the sandboxed evaluation of Guile 2.2>
-
-  \;
-
-  \ Backtrace:
-
-  \ \ \ \ \ \ \ \ \ \ \ 5 (apply-smob/1 #\<less\>catch-closure
-  556f1209a560\<gtr\>)
-
-  \ \ \ \ \ \ \ \ \ \ \ 4 (apply-smob/1 #\<less\>catch-closure
-  556f1763f5a0\<gtr\>)
-
-  \ \ \ \ \ \ \ \ \ \ \ 3 (apply-smob/1 #\<less\>catch-closure
-  556f1763f540\<gtr\>)
-
-  In ice-9/eval.scm:
-
-  \ \ \ 191:27 \ 2 (_ #f)
-
-  \ \ \ 223:20 \ 1 (proc #\<less\>directory (guile-user) 556f12139140\<gtr\>)
-
-  In unknown file:
-
-  \ \ \ \ \ \ \ \ \ \ \ 0 (%resolve-variable (7 . plotFun) #\<less\>directory
-  (guile-use\<ldots\>\<gtr\>)
-
-  \;
-
-  ERROR: In procedure %resolve-variable:
-
-  Unbound variable: plotFun
-
-  \;
-
-  [3]+ \ Done \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TEXMACS_PATH=$PWD/TeXmacs
-  TeXmacs/bin/texmacs.bin
-
-  \;
 </body>
 
 <\initial>
