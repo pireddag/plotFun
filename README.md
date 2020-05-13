@@ -5,15 +5,20 @@ The Scheme functions go in `.TeXmacs/progs/graphics/plotting/` (all lowercase!).
 
 Load the package plotFun
 
-The `plotFun` command takes two arguments: the function, expressed as a lambda in Scheme syntax
+The `plotFun` command takes one arguments, the name of a file which contains the functions to be plotted and the range for each function. 
+
+The functions and their ranges are expressed as a list of association lists (one association list for each function)
+The function is expressed as a lambda in Scheme syntax (association key "function")
 
 example: (lambda (x) ( - (expt x 2) 2.))
 
-the range on which we want the plot, without spaces (the parser is very simple and parses that only).
+the range as a list (association key "range")
 
-example: -2.,2.
+example: (-2. 2.)
 
-There is a test file and its pdf output (test_plotting_Scheme.tm and test_plotting_Scheme.pdf)
+Please refer to the example input files `fundefs_03.scm` and `fundefs_05.scm`.
+
+There is a test file and its pdf output (test_plotting_Scheme_working_05.tm and test_plotting_Scheme_working_05.pdf) as well as two input files
 
 ## Security
 
@@ -24,6 +29,8 @@ In order to run this macro in TeXmacs it is necessary to set the security level 
 Unsafe scripts could delete all the data on your hard drive.
 
 Please see how to change TeXmacs security options in the TeXmacs manual (section 1, "User preferences", of the part "Configuring TeXmacs"). I am not writing it here so that a conscious effort on the part of the user is needed to change the setting.
+
+Since this TeXmacs package executes commands in a user-defined arbitrary file (the one specified in the argument to `plotFun`), it is quite dangerous: you have to ensure that the file contains only safe code. I have tried to mitigate the danger by defining a "safe module" with "safe commands" (see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg00963.html) in the Guile maling list). I do not know how effective the technique is, so please be aware.
 
 
 
