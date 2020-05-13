@@ -7,11 +7,11 @@
   Scheme>>
 
   Tests the version of the plotting software which loads the function
-  definitions from a file and uses sandboxed evaluation of the file contents
+  definitions from a file and uses sandboxed evaluation of the file contents.
+  Please adjust the file paths in the arguments according to where you place them
 
   <\big-figure>
-    <plotFun|/home/giovanni/test/test TeXmacs/2 - Test/Test grafica
-    TeXmacs/fundefs_03.scm>
+    <plotFun|./fundefs_03.scm>
 
     \;
   <|big-figure>
@@ -19,8 +19,7 @@
   </big-figure>
 
   <\big-figure>
-    <plotFun|/home/giovanni/test/test TeXmacs/2 - Test/Test grafica
-    TeXmacs/fundefs_05.scm>
+    <plotFun|./fundefs_05.scm>
   <|big-figure>
     Two parabolae, a Gaussian and a sinusoid
   </big-figure>
