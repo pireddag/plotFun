@@ -1,6 +1,6 @@
-(texmacs-module (graphics plotting_working_05 plotFun)
-		(:use (graphics plotting_working_05 defineFunctions)
-		      (graphics plotting_working_05 setPoints)))
+(texmacs-module (graphics plotting plotFun)
+		(:use (graphics plotting defineFunctions)
+		      (graphics plotting setPoints)))
 
 (load "graphicsDefinitions.scm")
 ;(load "setPoints.scm")
