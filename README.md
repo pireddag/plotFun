@@ -8,13 +8,13 @@ Load the package plotFun
 The `plotFun` command takes one arguments, the name of a file which contains the functions to be plotted and the range for each function. 
 
 The functions and their ranges are expressed as a list of association lists (one association list for each function)
-The function is expressed as a lambda in Scheme syntax (association key "function")
+The function is expressed as a lambda in Scheme syntax (associated to the key "function")
 
-example: (lambda (x) ( - (expt x 2) 2.))
+example: `(lambda (x) ( - (expt x 2) 2.))`
 
-the range as a list (association key "range")
+the range as a list (associated to the key "range")
 
-example: (-2. 2.)
+example: `(-2. 2.)`
 
 Please refer to the example input files `fundefs_03.scm` and `fundefs_05.scm`.
 
