@@ -4,8 +4,8 @@
 ;; findRangeYAll: 2020-05-13 should have a warning if graphsList is empty
 
 
-(texmacs-module (graphics plotting_working_05 defineFunctions)
-		(:use (graphics plotting_working_05 setPoints)))
+(texmacs-module (graphics plotting defineFunctions)
+		(:use (graphics plotting setPoints)))
 
 
 
