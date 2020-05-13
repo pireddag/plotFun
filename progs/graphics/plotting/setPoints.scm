@@ -4,7 +4,7 @@
 ;; !! the numbers of points to plot can be set with an option
 
 
-(texmacs-module (graphics plotting_working_05 setPoints))
+(texmacs-module (graphics plotting setPoints))
 
 (tm-define (width range) ; takes for granted that the second element of range is larger than the first
     (- (cadr range) (car range)))
