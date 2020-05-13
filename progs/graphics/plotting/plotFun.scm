@@ -1,9 +1,11 @@
-(texmacs-module (graphics plotting_working_04 plotFun))
+(texmacs-module (graphics plotting_working_05 plotFun)
+		(:use (graphics plotting_working_05 defineFunctions)
+		      (graphics plotting_working_05 setPoints)))
 
 (load "graphicsDefinitions.scm")
-(load "setPoints.scm")
+;(load "setPoints.scm")
 (load "listOperations.scm")
-(load "defineFunctions.scm")
+;(load "defineFunctions.scm")
 (load "rescaleFunctions.scm")
 (load "setAxes.scm")
 (load "calculateTicks.scm")
@@ -83,6 +85,54 @@
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
     (map numbersGraphicsFun (numbersYPoints auxs))))
 
+;; (define (functionsGraphics graphsList auxs)
+;;   (let ((fun (cdr (assoc "function" (car graphsList))))
+;; 	(range (cdr (assoc "range" (car graphsList)))))
+;;     (appendMult
+;;      (list
+;;      `(graphics)
+;;      (list `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
+;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+
+(define (lineGraphics fun range auxs)
+  `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
+
+(define (lineGraphicsAll graphsList auxs)
+  (map (lambda (x)
+	 (let ((fun (cdr (assoc "function" x)))
+	       (range (cdr (assoc "range" x))))
+	   (lineGraphics fun range auxs)))
+       graphsList))
+
+;; (define (functionsGraphics graphsList auxs)
+;;   (let ((fun (cdr (assoc "function" (car graphsList))))
+;; 	(range (cdr (assoc "range" (car graphsList)))))
+;;     (appendMult
+;;      (list
+;;      `(graphics)
+;;      (list (lineGraphics fun range auxs))
+;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+
+
+(define (functionsGraphics graphsList auxs)
+  (let ((fun (cdr (assoc "function" (car graphsList))))
+	(range (cdr (assoc "range" (car graphsList)))))
+    (appendMult
+     (list
+     `(graphics)
+     (lineGraphicsAll graphsList auxs)
+     `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+       (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+       (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+       (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+
+
 ;; overall graphics function
 
 (define (compose-graphics fileS)
@@ -113,12 +163,14 @@
 	   ;;		  ("range" . ,(list -2. 2.)))))
 	   (fun (cdr (assoc "function" (car graphsList)))) ; take just the first element at the moment, after the tests I wish to be able to plot several functions
 	   (range (cdr (assoc "range" (car graphsList))))
-	   (fVals (funValues fun range)) ; function values
-	   (rangeX range)
-	   (rangeY  `(,(apply min fVals) ,(apply max fVals)))
+	   ;; (fVals (funValues fun range)) ; function values
+	   ;; (fVals (funValuesAll graphsList)) ; function values
+	   ;;(rangeX range)
+	   (rangeX (findRangeXAll graphsList))
+	   ;;(rangeY  `(,(apply min fVals) ,(apply max fVals)))
+	   (rangeY (findRangeYAll graphsList))
 	   (auxs `(("rangeX" . ,rangeX)
-		   ("rangeY" . ,rangeY)
-		   ("fVals"  . ,fVals)))) ;function values (do I need it?)
+		   ("rangeY" . ,rangeY)))) ; function values (do I need it? 2020-05-13: no)
       (begin
 	;; (display "\n testing graphics list \n")
 	;; (display "\n x- ticks \n")
@@ -127,12 +179,13 @@
 	;; (display  (ticksYGraphics funS rangeS))
 	(appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
 	 (list
-	  `(graphics
-	    (with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs))
-	    (with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-	    (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-	    (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-	    (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
+	  ;; `(graphics
+	  ;;   (with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs))
+	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
+	  (functionsGraphics graphsList auxs)
 	  (ticksXGraphics auxs)
 	  (ticksYGraphics auxs)
 	  (numbersXGraphics auxs)
