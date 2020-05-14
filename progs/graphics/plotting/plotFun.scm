@@ -1,18 +1,25 @@
-(texmacs-module (graphics plotting_working_05 plotFun)
+(texmacs-module (graphics plotting plotFun)
 		(:use (graphics plotting defineFunctions)
-		      (graphics plotting setPoints)))
+		      (graphics plotting setPoints)
+		      (graphics plotting graphicsDefinitions)
+		      (graphics plotting setTicks)
+		      (graphics plotting inputFromFile)
+		      (graphics plotting setAxes)
+		      (graphics plotting listOperations)
+		      (graphics plotting setColors)
+		      (graphics plotting setNumbers)))
 
-(load "graphicsDefinitions.scm")
-;(load "setPoints.scm")
-(load "listOperations.scm")
-;(load "defineFunctions.scm")
-(load "rescaleFunctions.scm")
-(load "setAxes.scm")
-(load "calculateTicks.scm")
-(load "setTicks.scm")
-(load "setNumbers.scm")
-(load "setColors.scm")
-(load "inputFromFile.scm")
+					;(load "graphicsDefinitions.scm")
+					;(load "setPoints.scm")
+;(load "listOperations.scm")
+					;(load "defineFunctions.scm")
+;(load "rescaleFunctions.scm")
+;(load "setAxes.scm")
+					;(load "calculateTicks.scm")
+					;(load "setTicks.scm")
+;(load "setNumbers.scm")
+;(load "setColors.scm")
+					;(load "inputFromFile.scm")
 
 
 ;; https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
@@ -131,11 +138,11 @@
 ;; Note also https://stackoverflow.com/questions/38589238/how-to-use-map-with-a-function-that-needs-more-arguments
 (define (lineGraphicsAll graphsList auxs)
   (let ((cList (colorListForThisPlot colorList graphsList)))
-  (map (lambda (x y)
-	 (let ((fun (cdr (assoc "function" x)))
-	       (range (cdr (assoc "range" x))))
-	   (lineGraphics fun range y auxs)))
-       graphsList cList)))
+    (map (lambda (x y)
+	   (let ((fun (cdr (assoc "function" x)))
+		 (range (cdr (assoc "range" x))))
+	     (lineGraphics fun range y auxs)))
+	 graphsList cList)))
 
 ;; (define (functionsGraphics graphsList auxs)
 ;;   (let ((fun (cdr (assoc "function" (car graphsList))))
@@ -155,12 +162,12 @@
 	(range (cdr (assoc "range" (car graphsList)))))
     (appendMult
      (list
-     `(graphics)
-     (lineGraphicsAll graphsList auxs)
-     `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-       (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-       (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-       (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+      `(graphics)
+      (lineGraphicsAll graphsList auxs)
+      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+	(with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+	(with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+	(with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
 
 
 ;; overall graphics function
@@ -172,54 +179,54 @@
   ;; define graphsList as
   ;; (graphsList (eval (string->read graphsListStr) (make-pure-math-module))
   ;; before running the commented lines
-    ;; do not need to quote (string->read graphsListStr) as it is a symbol
-    ;; see https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
-    ;; (set! diag graphsList)
-    ;; (display "\n")
-    ;; (display diag)
-    ;; (display "\n")
-    ;; (display (car diag))
-    ;; (display "\n")
-    ;; (display (list? diag))
-    ;; (display "\n")
-    ;; (display (cdr diag))
-    ;; (display "\n")
-    ;; (display "\n")
+  ;; do not need to quote (string->read graphsListStr) as it is a symbol
+  ;; see https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
+  ;; (set! diag graphsList)
+  ;; (display "\n")
+  ;; (display diag)
+  ;; (display "\n")
+  ;; (display (car diag))
+  ;; (display "\n")
+  ;; (display (list? diag))
+  ;; (display "\n")
+  ;; (display (cdr diag))
+  ;; (display "\n")
+  ;; (display "\n")
   (let* ((graphsList (eval (string->read graphsListStr) (make-pure-math-module)))
-	     ;; do not need to quote (string->read graphsListStr) as it is a symbol
-    ;; see
-	   ;;(graphsList (list
-	   ;;		`(("function" . ,(lambda (x) ( - (expt x 2) 2.)))
-	   ;;		  ("range" . ,(list -2. 2.)))))
-	   (fun (cdr (assoc "function" (car graphsList)))) ; take just the first element at the moment, after the tests I wish to be able to plot several functions
-	   (range (cdr (assoc "range" (car graphsList))))
-	   ;; (fVals (funValues fun range)) ; function values
-	   ;; (fVals (funValuesAll graphsList)) ; function values
-	   ;;(rangeX range)
-	   (rangeX (findRangeXAll graphsList))
-	   ;;(rangeY  `(,(apply min fVals) ,(apply max fVals)))
-	   (rangeY (findRangeYAll graphsList))
-	   (auxs `(("rangeX" . ,rangeX)
-		   ("rangeY" . ,rangeY)))) ; function values (do I need it? 2020-05-13: no)
-      (begin
-	;; (display "\n testing graphics list \n")
-	;; (display "\n x- ticks \n")
-	;; (display  (ticksXGraphics funS rangeS))
-	;; (display "\n y-ticks \n")
-	;; (display  (ticksYGraphics funS rangeS))
-	(appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
-	 (list
-	  ;; `(graphics
-	  ;;   (with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs))
-	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-	  ;;   (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
-	  (functionsGraphics graphsList auxs)
-	  (ticksXGraphics auxs)
-	  (ticksYGraphics auxs)
-	  (numbersXGraphics auxs)
-	  (numbersYGraphics auxs))))))
+	 ;; do not need to quote (string->read graphsListStr) as it is a symbol
+	 ;; see
+	 ;;(graphsList (list
+	 ;;		`(("function" . ,(lambda (x) ( - (expt x 2) 2.)))
+	 ;;		  ("range" . ,(list -2. 2.)))))
+	 (fun (cdr (assoc "function" (car graphsList)))) ; take just the first element at the moment, after the tests I wish to be able to plot several functions
+	 (range (cdr (assoc "range" (car graphsList))))
+	 ;; (fVals (funValues fun range)) ; function values
+	 ;; (fVals (funValuesAll graphsList)) ; function values
+	 ;;(rangeX range)
+	 (rangeX (findRangeXAll graphsList))
+	 ;;(rangeY  `(,(apply min fVals) ,(apply max fVals)))
+	 (rangeY (findRangeYAll graphsList))
+	 (auxs `(("rangeX" . ,rangeX)
+		 ("rangeY" . ,rangeY)))) ; function values (do I need it? 2020-05-13: no)
+    (begin
+      ;; (display "\n testing graphics list \n")
+      ;; (display "\n x- ticks \n")
+      ;; (display  (ticksXGraphics funS rangeS))
+      ;; (display "\n y-ticks \n")
+      ;; (display  (ticksYGraphics funS rangeS))
+      (appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
+       (list
+	;; `(graphics
+	;;   (with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs))
+	;;   (with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+	;;   (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+	;;   (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+	;;   (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
+	(functionsGraphics graphsList auxs)
+	(ticksXGraphics auxs)
+	(ticksYGraphics auxs)
+	(numbersXGraphics auxs)
+	(numbersYGraphics auxs))))))
 ;;;
 
 (tm-define (plotFun definitionFile)

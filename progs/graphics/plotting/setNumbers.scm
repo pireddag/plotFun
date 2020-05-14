@@ -6,6 +6,8 @@
 ;;
 ;; can be used for simplifying this function
 
+(texmacs-module (graphics plotting setNumbers))
+
 ;;; Lists for numbers
 
 (define (numbersXPtsList auxs) ; temporary function, to fix with global calculations of axes and ticks
@@ -32,7 +34,7 @@
 	;; (display ticksY)
 	(map numbersPointFun ticksYPos))))
 
-(define (numbersXPoints auxs)
+(tm-define (numbersXPoints auxs)
   (let ((numbersPtLst (numbersXPtsList auxs))
 	(pointFun
 	 (lambda (x)
@@ -47,7 +49,7 @@
       ;; (display (pointFun (car numbersPtLst)))
       (map pointFun numbersPtLst))))
 
-(define (numbersYPoints auxs)
+(tm-define (numbersYPoints auxs)
   (let ((numbersPtLst (numbersYPtsList auxs))
 	(pointFun (lambda (x)
 		    (list 'with "text-at-valign" "center" "text-at-halign" "right"

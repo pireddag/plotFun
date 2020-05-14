@@ -1,3 +1,5 @@
+(texmacs-module  (graphics plotting inputFromFile))
+
 (define (addToStringRec dataPort str)
   (let ((lineIn (read-line dataPort)))
 	(if (eof-object? lineIn)
@@ -8,5 +10,5 @@
 	      ))))
 
 ;; start the recursive function addToStringRec with the empty string
-(define (readFile dataPort)
+(tm-define (readFile dataPort)
   (addToStringRec dataPort ""))

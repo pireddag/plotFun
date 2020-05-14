@@ -5,15 +5,18 @@
 ;; Calculating function values only once will help with drawing more than one functio in the same graph
 
 
+(texmacs-module  (graphics plotting setAxes)
+		 (:use (graphics plotting rescaleFunctions)))
+
 ;; !! margin for X: the same as in the other function (for list of points I think)?
-(define (axLimsX auxs) 
+(tm-define (axLimsX auxs) 
   (let* ((rangeX (cdr (assoc "rangeX" auxs)))
 	 (margin (/ (width rangeX) 10)))
     `(,(- (car rangeX) margin) ,(+ (cadr rangeX) margin))))
 
 ;; !! margin for Y: the same as in the other function (for list of points I think)?
 ;; !! rangeY: can it be calculated apart? Do I use it somewhere else?
-(define (axLimsY auxs)
+(tm-define (axLimsY auxs)
   (let* ((rangeY (cdr (assoc "rangeY" auxs)))
 	 (margin (/ (width rangeY) 10)))
     (begin
@@ -80,28 +83,28 @@
 ;; 		 (rescalePairsRef axPts (ptlist funString range))))))
 ;; 					; uses szX (for x-axis scaling)
 
-(define (axX auxs)
+(tm-define (axX auxs)
    (let ((axPts (axPtsX auxs)))
     (append '(line)
 	    (map list->pt
 		 (rescalePairs axPts auxs)))))
 					; uses szX (for x-axis scaling)
 
-(define (axXUp auxs)
+(tm-define (axXUp auxs)
   (let ((axPts (axPtsXUp auxs)))
     (append '(line)
 	    (map list->pt
 		 (rescalePairs axPts auxs)))))
 					; uses szX (for x-axis scaling)
 
-(define (axY auxs)
+(tm-define (axY auxs)
   (let ((axPts (axPtsY auxs)))
     (append '(line)
 	    (map list->pt
 		 (rescalePairs axPts auxs)))))
 					; uses szY (for y-axis scaling)
 
-(define (axYRight auxs)
+(tm-define (axYRight auxs)
   (let ((axPts (axPtsYRight auxs)))
     (append '(line)
 	    (map list->pt
