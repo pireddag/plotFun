@@ -3,7 +3,7 @@
 <style|<tuple|generic|old-dots>>
 
 <\body>
-  <use-module|(graphics plotting_working_05 plotFun)>
+  <use-module|(graphics plotting plotFun)>
 
   <assign|plotFun|<macro|definitionFile|<extern|plotFun|<arg|definitionFile>>>>
 </body>
