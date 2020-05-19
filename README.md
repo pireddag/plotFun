@@ -46,6 +46,7 @@ The technique is as far as I understand the one suited to the Guile 1 series - f
  * Optional user-selected for each plot
      * color
      * line thickness
+     * line type
      * number of points
  * Error messages for wrong input
  * Functions in standard notation
