@@ -38,5 +38,15 @@ Since this TeXmacs package executes commands in a user-defined arbitrary file (t
 
 The technique is as far as I understand the one suited to the Guile 1 series - for the Guile 2/3 series (future TeXmacs) I have seen that another technique exists, based on the `(ice-9 sandbox)` module; see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg10788.html) in the Guile maling list.
 
+## Desirable features
+
+ * Optional user-selected
+  * graph size
+   * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
+ * Optional user-selected for each plot
+  * color
+  * line thickness
+  * number of points
+
 
 
