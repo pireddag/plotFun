@@ -41,12 +41,12 @@ The technique is as far as I understand the one suited to the Guile 1 series - f
 ## Desirable features
 
  * Optional user-selected
-  * graph size
-   * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
+     * graph size
+     * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
  * Optional user-selected for each plot
-  * color
-  * line thickness
-  * number of points
+     * color
+     * line thickness
+     * number of points
 
 
 
