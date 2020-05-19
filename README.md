@@ -42,7 +42,7 @@ The technique is as far as I understand the one suited to the Guile 1 series - f
 
  * Optional user-selected
      * graph size
-     * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
+         * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
  * Optional user-selected for each plot
      * color
      * line thickness
