@@ -28,6 +28,7 @@
 	   ;; (display "\n")
 	   ;; Starting with `(with "color" "black"
 	   ;; is essential to get the  'with  "text-at-halign" "center" to be active
+	   (let ((xLab (assoc-ref auxs "xLabel")))
  `(with "color" "black" ,(list 'with  "text-at-halign" "center"
-			  (list 'text-at "label for the x-axis"
-				(list->pt (xLabelPos auxs))))))
+			  (list 'text-at xLab
+				(list->pt (xLabelPos auxs)))))))

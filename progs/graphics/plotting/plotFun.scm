@@ -17,7 +17,7 @@
    (open-input-string text)))
 
 (define diag '()) ;; diagnostics
-(define graphsListStr '()) ;; initialize to empty string in order to be able to place the symbol in the "safe" module we are going to set up
+(define graphsListStr '());; initialize to empty string in order to be able to place the symbol in the "safe" module we are going to set up
 ;; it is then possible to set it to something else (we will set it to the association list in string form) before calling eval onto it
 
 (define (make-pure-math-module)
@@ -35,7 +35,7 @@
       (module-define! m 'round round)
       (module-define! m 'floor floor)
       (module-define! m 'ceiling ceiling)
-      ;; a few are still missing, but I have to check if they are present in Guile 1.8
+      ;; a few of the list of Guile 3 are still missing, but I have to check if they are present in Guile 1.8
       (module-define! m 'sqrt sqrt)
       (module-define! m 'expt expt)
       (module-define! m 'sin sin)
@@ -167,14 +167,17 @@
   ;; (display "\n")
   ;; (display "\n")
   (let* ((graphsList (eval (string->read graphsListStr) (make-pure-math-module)))
+	 (plotsList (assoc-ref graphsList "plotsList"))
 	 ;; do not need to quote (string->read graphsListStr) as it is a symbol
 	 ;; Example: 
 	 ;;(graphsList (list
 	 ;;		`(("function" . ,(lambda (x) ( - (expt x 2) 2.)))
 	 ;;		  ("range" . ,(list -2. 2.)))))
-	 (rangeX (findRangeXAll graphsList))
-	 (rangeY (findRangeYAll graphsList))
-	 (auxs `(("rangeX" . ,rangeX)
+	 (rangeX (findRangeXAll plotsList))
+	 (rangeY (findRangeYAll plotsList))
+	 (xLab (assoc-ref graphsList "xLabel"))
+	 (auxs `(("xLabel" . ,xLab)
+		 ("rangeX" . ,rangeX)
 		 ("rangeY" . ,rangeY)))) ; function values (do I need it? 2020-05-13: no)
       ;; (display "\n testing graphics list \n")
       ;; (display "\n x- ticks \n")
@@ -183,7 +186,7 @@
       ;; (display  (ticksYGraphics funS rangeS))
       (appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
        (list
-	(functionsGraphics graphsList auxs)
+	(functionsGraphics plotsList auxs)
 	(ticksXGraphics auxs)
 	(ticksYGraphics auxs)
 	(numbersXGraphics auxs)
