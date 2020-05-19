@@ -7,19 +7,8 @@
 		      (graphics plotting setAxes)
 		      (graphics plotting listOperations)
 		      (graphics plotting setColors)
-		      (graphics plotting setNumbers)))
-
-					;(load "graphicsDefinitions.scm")
-					;(load "setPoints.scm")
-;(load "listOperations.scm")
-					;(load "defineFunctions.scm")
-;(load "rescaleFunctions.scm")
-;(load "setAxes.scm")
-					;(load "calculateTicks.scm")
-					;(load "setTicks.scm")
-;(load "setNumbers.scm")
-;(load "setColors.scm")
-					;(load "inputFromFile.scm")
+		      (graphics plotting setNumbers)
+		      (graphics plotting setLabels)))
 
 
 ;; https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
@@ -34,6 +23,7 @@
 (define (make-pure-math-module)
   (let ((m (make-module)))
     (begin
+      ;; math symbols
       (module-define! m '* *)
       (module-define! m '- -)
       (module-define! m '+ +)
@@ -63,11 +53,13 @@
       (module-define! m 'asinh asinh)
       (module-define! m 'acosh acosh)
       (module-define! m 'atanh atanh)
+      ;; other symbols
       (module-define! m 'lambda lambda)
       (module-define! m 'list list)
       (module-define! m 'quote quote)
       (module-define! m 'quasiquote quasiquote)
       (module-define! m 'string->read string->read)
+      ;; symbol where the user-defined information will be contained
       (module-define! m 'graphsListStr graphsListStr))
     m))
 
@@ -79,24 +71,30 @@
 ;; note that the syntax of the string that represents the two numbers is strict at the moment
 ;; (there cannot be any space)
 (define (rangeString->list rangeString)
-  (begin
     ;; (display "\n")
     ;; (display "range conversion")
     ;; (display "\n")
     ;; (display  (string-split rangeString #\,))
-    (map string->number (string-split rangeString #\,)))) ; split at commas https://www.gnu.org/software/guile/docs/docs-1.6/guile-ref/List-String-Conversion.html#List%2fString%20Conversion
+    (map string->number (string-split rangeString #\,))) ; split at commas https://www.gnu.org/software/guile/docs/docs-1.6/guile-ref/List-String-Conversion.html#List%2fString%20Conversion
 
 
 ;; A function for the rescaled points
 (define (lineFun fun range auxs)
-  (begin
     ;; (display "\n")
     ;; (display range)
     ;; (display "\n")
     ;;(display  (append `(line) (map list->pt (ptlist fun))))
-    ;; (append `(spline) (map list->pt (ptlist fun range))))) ; without rescaling
+    ;; (append `(spline) (map list->pt (ptlist fun range)))) ; without rescaling
     ;; read file
-    (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs)))))	        ; with rescaling
+    (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs))))        ; with rescaling
+
+;;; https://stackoverflow.com/questions/8387583/writing-flatten-method-in-scheme
+;; https://stackoverflow.com/a/8387641
+;; 2020-05-19 written here to test whether it is possible to substitute it in for appendMult - not possible
+;; (define (flatten x)
+;;   (cond ((null? x) '())
+;;         ((pair? x) (append (flatten (car x)) (flatten (cdr x))))
+;;         (else (list x))))
 
 
 ;;;
@@ -119,17 +117,6 @@
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
     (map numbersGraphicsFun (numbersYPoints auxs))))
 
-;; (define (functionsGraphics graphsList auxs)
-;;   (let ((fun (cdr (assoc "function" (car graphsList))))
-;; 	(range (cdr (assoc "range" (car graphsList)))))
-;;     (appendMult
-;;      (list
-;;      `(graphics)
-;;      (list `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
-;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
 
 (define (lineGraphics fun range color auxs)
   `(with "color" ,color "line-width" "1.5ln" ,(lineFun fun range auxs)))
@@ -144,23 +131,10 @@
 	     (lineGraphics fun range y auxs)))
 	 graphsList cList)))
 
-;; (define (functionsGraphics graphsList auxs)
-;;   (let ((fun (cdr (assoc "function" (car graphsList))))
-;; 	(range (cdr (assoc "range" (car graphsList)))))
-;;     (appendMult
-;;      (list
-;;      `(graphics)
-;;      (list (lineGraphics fun range auxs))
-;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
-
-
 (define (functionsGraphics graphsList auxs)
   (let ((fun (cdr (assoc "function" (car graphsList))))
 	(range (cdr (assoc "range" (car graphsList)))))
-    (appendMult
+    (appendMult ; 2020-05-19 appendMult works on a list of lists, eliminating a set of parentheses, but is not equivalent to flatten as defined in https://stackoverflow.com/a/8387641
      (list
       `(graphics)
       (lineGraphicsAll graphsList auxs)
@@ -194,21 +168,14 @@
   ;; (display "\n")
   (let* ((graphsList (eval (string->read graphsListStr) (make-pure-math-module)))
 	 ;; do not need to quote (string->read graphsListStr) as it is a symbol
-	 ;; see
+	 ;; Example: 
 	 ;;(graphsList (list
 	 ;;		`(("function" . ,(lambda (x) ( - (expt x 2) 2.)))
 	 ;;		  ("range" . ,(list -2. 2.)))))
-	 (fun (cdr (assoc "function" (car graphsList)))) ; take just the first element at the moment, after the tests I wish to be able to plot several functions
-	 (range (cdr (assoc "range" (car graphsList))))
-	 ;; (fVals (funValues fun range)) ; function values
-	 ;; (fVals (funValuesAll graphsList)) ; function values
-	 ;;(rangeX range)
 	 (rangeX (findRangeXAll graphsList))
-	 ;;(rangeY  `(,(apply min fVals) ,(apply max fVals)))
 	 (rangeY (findRangeYAll graphsList))
 	 (auxs `(("rangeX" . ,rangeX)
 		 ("rangeY" . ,rangeY)))) ; function values (do I need it? 2020-05-13: no)
-    (begin
       ;; (display "\n testing graphics list \n")
       ;; (display "\n x- ticks \n")
       ;; (display  (ticksXGraphics funS rangeS))
@@ -216,17 +183,12 @@
       ;; (display  (ticksYGraphics funS rangeS))
       (appendMult ; have to use appendMult because of the own definition of append (is an own def. of append necessary?)
        (list
-	;; `(graphics
-	;;   (with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs))
-	;;   (with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-	;;   (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-	;;   (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-	;;   (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))
 	(functionsGraphics graphsList auxs)
 	(ticksXGraphics auxs)
 	(ticksYGraphics auxs)
 	(numbersXGraphics auxs)
-	(numbersYGraphics auxs))))))
+	(numbersYGraphics auxs)
+	(xLabel auxs)))))
 ;;;
 
 (tm-define (plotFun definitionFile)
@@ -234,3 +196,30 @@
 	     (stree->tree
 	      `(with "gr-geometry" (tuple "geometry" "9cm" "6cm" "center")
 		     ,(compose-graphics fileS)))))
+
+
+;;; Old versions of functionsGraphics
+
+;; (define (functionsGraphics graphsList auxs)
+;;   (let ((fun (cdr (assoc "function" (car graphsList))))
+;; 	(range (cdr (assoc "range" (car graphsList)))))
+;;     (appendMult
+;;      (list
+;;      `(graphics)
+;;      (list `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
+;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+
+;; (define (functionsGraphics graphsList auxs)
+;;   (let ((fun (cdr (assoc "function" (car graphsList))))
+;; 	(range (cdr (assoc "range" (car graphsList)))))
+;;     (appendMult
+;;      (list
+;;      `(graphics)
+;;      (list (lineGraphics fun range auxs))
+;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))

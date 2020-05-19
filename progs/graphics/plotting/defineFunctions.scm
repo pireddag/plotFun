@@ -8,9 +8,7 @@
 		(:use (graphics plotting setPoints)))
 
 
-
 (define (pairfun fun x)
-  (begin
     ;; (display "\n")
     ;; (display x)
     ;; (display "\n")
@@ -19,7 +17,7 @@
     ;; (display `(,fun ,x))
     ;; (display "\n")
     ;; (display (fun x))
-    `(,x ,(fun x))))
+    `(,x ,(fun x)))
 
 (tm-define (funValues funString range)
 	   (map (lambda (x) (funString x)) (pts range)))

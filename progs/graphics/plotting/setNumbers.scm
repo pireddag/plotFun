@@ -6,7 +6,8 @@
 ;;
 ;; can be used for simplifying this function
 
-(texmacs-module (graphics plotting setNumbers))
+(texmacs-module (graphics plotting setNumbers)
+		(:use (graphics plotting graphicsDefinitions)))
 
 ;;; Lists for numbers
 
@@ -28,11 +29,10 @@
 	 (numbersPointFun (lambda (x) (list (- limX (/ (width rangeX) (* 24 1.5))) x))))
     ;; the factor 24 that divides (width range) is found by trial and error, 1.5 accounts for the different width of
     ;; the figure in the x direction - it places the tick labels at a good distance from the y-axis
-      (begin
 	;; (display "\n check y-numbers \n")
 	;; (display "y-ticks \n")
 	;; (display ticksY)
-	(map numbersPointFun ticksYPos))))
+	(map numbersPointFun ticksYPos)))
 
 (tm-define (numbersXPoints auxs)
   (let ((numbersPtLst (numbersXPtsList auxs))
@@ -42,12 +42,11 @@
 		 (list 'text-at (number->string (car x))
 		       (list->pt (car (rescalePairs (list x) auxs))))))))
     ;; some hacks to use the rescalePairs function with single points
-    (begin
       ;; (display "\n calculating numbers \n")
       ;; (display numbersPtLst)
       ;; (display "\n first point \n")
       ;; (display (pointFun (car numbersPtLst)))
-      (map pointFun numbersPtLst))))
+      (map pointFun numbersPtLst)))
 
 (tm-define (numbersYPoints auxs)
   (let ((numbersPtLst (numbersYPtsList auxs))
@@ -57,9 +56,8 @@
 				(list->pt (car (rescalePairs (list x) auxs))))))))
     ;; (number->string (cadr x)) uses cadr because we want the second coordinate
     ;; some hacks to use the rescalePairs function with single points
-    (begin
       ;; (display "\n calculating numbers \n")
       ;; (display numbersPtLst)
       ;; (display "\n first point \n")
       ;; (display (pointFun (car numbersPtLst)))
-      (map pointFun numbersPtLst))))
+      (map pointFun numbersPtLst)))
