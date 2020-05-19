@@ -20,6 +20,10 @@ Please refer to the example input files `fundefs_03.scm` and `fundefs_05.scm`.
 
 There is a test file and its pdf output (test_plotting_Scheme_working_05.tm and test_plotting_Scheme_working_05.pdf) as well as two input files
 
+## Input
+
+The input syntax (association list) is extremely finicky, an error makes the progam fail and the error messages do not indicate that the input needs to be corrected. It is necessary to improve this part.
+
 ## Security
 
 In order to run this macro in TeXmacs it is necessary to set the security level to "Accept all scripts".
