@@ -1,6 +1,5 @@
 (texmacs-module (graphics plotting graphicsComposition)
 		(:use (graphics plotting defineFunctions)
-;;		      (graphics plotting setPoints)
 		      (graphics plotting setTicks)
 		      (graphics plotting setColors)
 		      (graphics plotting setNumbers)))
@@ -37,22 +36,32 @@
     (map numbersGraphicsFun (numbersYPoints auxs))))
 
 
-(define (lineGraphics fun range color auxs)
-  `(with "color" ,color "line-width" "1.5ln" ,(lineFun fun range auxs)))
+(define (lineGraphics fun range lWidth dStyle color auxs)
+  (if (not lWidth)
+      (set! lWidth "1.5ln")) ; if line-width is not in the association list lWidth is set to false; we set it then to "1.5ln"
+  (if (not dStyle)
+      (set! dStyle "11111"))
+  `(with
+    "color" ,color
+    "line-width" ,lWidth
+    "dash-style" ,dStyle
+    ,(lineFun fun range auxs)))
 
 ;; Mapping on several lists is standard in Scheme
 ;; Note also https://stackoverflow.com/questions/38589238/how-to-use-map-with-a-function-that-needs-more-arguments
 (define (lineGraphicsAll graphsList auxs)
   (let ((cList (colorListForThisPlot colorList graphsList)))
     (map (lambda (x y)
-	   (let ((fun (cdr (assoc "function" x)))
-		 (range (cdr (assoc "range" x))))
-	     (lineGraphics fun range y auxs)))
+	   (let ((fun (assoc-ref x "function")) 
+		 (range (assoc-ref x "range"))
+		 (lWidth (assoc-ref x "line-width"))
+		 (dStyle (assoc-ref x "dash-style"))
+					; assoc and assoc-ref have opposite order of arguments (assoc: key, alist assoc-ref: alist key
+		 )
+	     (lineGraphics fun range lWidth dStyle y auxs)))
 	 graphsList cList)))
 
 (tm-define (functionsGraphics graphsList auxs)
-  (let ((fun (cdr (assoc "function" (car graphsList))))
-	(range (cdr (assoc "range" (car graphsList)))))
     (appendMult ; 2020-05-19 appendMult works on a list of lists, eliminating a set of parentheses, but is not equivalent to flatten as defined in https://stackoverflow.com/a/8387641
      (list
       `(graphics)
@@ -60,4 +69,31 @@
       `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
 	(with "color" "black" "line-width" "0.75ln" ,(axY auxs))
 	(with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-	(with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+	(with "color" "black" "line-width" "0.75ln" ,(axYRight auxs))))))
+
+
+;;; Old versions of functionsGraphics
+
+;; (define (functionsGraphics graphsList auxs)
+;;   (let ((fun (cdr (assoc "function" (car graphsList))))
+;; 	(range (cdr (assoc "range" (car graphsList)))))
+;;     (appendMult
+;;      (list
+;;      `(graphics)
+;;      (list `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
+;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
+
+;; (define (functionsGraphics graphsList auxs)
+;;   (let ((fun (cdr (assoc "function" (car graphsList))))
+;; 	(range (cdr (assoc "range" (car graphsList)))))
+;;     (appendMult
+;;      (list
+;;      `(graphics)
+;;      (list (lineGraphics fun range auxs))
+;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
+;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))

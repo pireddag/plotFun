@@ -21,8 +21,6 @@
 
 (define diag '()) ;; diagnostics
 
-
-
 ;; A function that plots functions
 
 ;; ;;; Function for input conversion
@@ -104,28 +102,4 @@
 		     ,(compose-graphics fileS)))))
 
 
-;;; Old versions of functionsGraphics
 
-;; (define (functionsGraphics graphsList auxs)
-;;   (let ((fun (cdr (assoc "function" (car graphsList))))
-;; 	(range (cdr (assoc "range" (car graphsList)))))
-;;     (appendMult
-;;      (list
-;;      `(graphics)
-;;      (list `(with "color" "blue" "line-width" "1.5ln" ,(lineFun fun range auxs)))
-;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
-
-;; (define (functionsGraphics graphsList auxs)
-;;   (let ((fun (cdr (assoc "function" (car graphsList))))
-;; 	(range (cdr (assoc "range" (car graphsList)))))
-;;     (appendMult
-;;      (list
-;;      `(graphics)
-;;      (list (lineGraphics fun range auxs))
-;;      `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axY auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
-;;        (with "color" "black" "line-width" "0.75ln" ,(axYRight auxs)))))))
