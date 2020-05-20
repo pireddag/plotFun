@@ -1,6 +1,6 @@
 <TeXmacs|1.99.12>
 
-<style|<tuple|generic|old-dots|plotFun>>
+<style|<tuple|generic|old-dots|plotFun_working_07>>
 
 <\body>
   \ <doc-data|<doc-title|Plotting functions with <TeXmacs> graphics and
@@ -20,12 +20,8 @@
   <\big-figure>
     <plotFun|./fundefs_08.scm>
   <|big-figure>
-    A series of straight lines
+    A series of straight lines. For some of them we choose style and width.
   </big-figure>
-
-  <\plot-output|<plot-curve|<around*|(|sin x|)>|-2|2>>
-    \;
-  </plot-output>
 </body>
 
 <\initial>
