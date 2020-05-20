@@ -56,9 +56,12 @@
 		 (range (assoc-ref x "range"))
 		 (lWidth (assoc-ref x "line-width"))
 		 (dStyle (assoc-ref x "dash-style"))
+		 (colorThis (assoc-ref x "color"))
 					; assoc and assoc-ref have opposite order of arguments (assoc: key, alist assoc-ref: alist key
 		 )
-	     (lineGraphics fun range lWidth dStyle y auxs)))
+	     (if (not colorThis)
+		 (set! colorThis y))  ; if color is not in the association list colorThis is set to false; we set it then to the color specified by y (which is mapped to the list of colors cList)
+	     (lineGraphics fun range lWidth dStyle colorThis auxs)))
 	 plotsList cList)))
 
 (tm-define (functionsGraphics plotsList auxs)
