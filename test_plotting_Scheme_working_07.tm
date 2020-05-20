@@ -20,7 +20,8 @@
   <\big-figure>
     <plotFun|./fundefs_08.scm>
   <|big-figure>
-    A series of straight lines. For some of them we choose style and width.
+    A series of straight lines. For some of them we choose style, color and
+    width.
   </big-figure>
 </body>
 
@@ -46,7 +47,8 @@
       </surround>|<pageref|auto-1>>
 
       <tuple|normal|<\surround|<hidden-binding|<tuple>|2>|>
-        A series of straight lines
+        A series of straight lines. For some of them we choose style and
+        width.
       </surround>|<pageref|auto-2>>
     </associate>
   </collection>
