@@ -16,9 +16,9 @@ the range as a list (associated to the key "range")
 
 example: `(-2. 2.)`
 
-Please refer to the example input files `fundefs_03.scm` and `fundefs_05.scm`.
+Please refer to the example input files `fundefs_07.scm` and `fundefs_08.scm`.
 
-There is a test file and its pdf output (test_plotting_Scheme_working_05.tm and test_plotting_Scheme_working_05.pdf) as well as two input files
+There is a test file and its pdf output (`test_plotting_Scheme_working_07.tm` and `test_plotting_Scheme_working_07.pdf`) in addition to the two input files
 
 ## Input
 
