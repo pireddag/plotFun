@@ -5,8 +5,6 @@
 		       (graphics plotting setAxes)))
 
 
-
-
 ;; Need to write the placement functions (numbers and label) in a better fashion
 ;; They need to be consistent with each other and give good placement for every ax size
 
@@ -19,7 +17,7 @@
 	 (xLabPos     (rescalePairs `((,(/ (+ xMin xMax) 2)
 		     ,(- yMin (/ (width axLY) 6.8))))
 		  auxs)))
-	 ;; rescalePairs gives a list, for this function I want the only element of this list
+	 ;; rescalePairs gives a list, as output of this function I want the only element of this list
 	 (car xLabPos)))
 
 (tm-define (xLabel auxs)

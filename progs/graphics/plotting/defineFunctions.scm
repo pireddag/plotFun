@@ -51,6 +51,13 @@
 		(apply min (funValuesAll graphsList))
 		(apply max (funValuesAll graphsList)))))
 
+;;; functions that act on syntax
+
+;; https://stackoverflow.com/questions/7170162/converting-a-string-to-a-procedure
+(tm-define (string->read text) ;renamed from read-string to avoid conflict with read-string of standard guile
+  (read
+   (open-input-string text)))
+
 
 
 
