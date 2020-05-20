@@ -5,7 +5,7 @@ The Scheme functions go in `.TeXmacs/progs/graphics/plotting/` (all lowercase!).
 
 Load the package plotFun
 
-The `plotFun` command takes one arguments, the name of a file. The file contains the functions to be plotted, the range for each function, general plot options and additional options for each function (options are optional).
+The `plotFun` command takes one arguments, the name of a file. The file contains the functions to be plotted, the range for each function, general plot options and additional options for each function (color, style, thickness); default options are subsituted for missing options.
 
 The functions and their ranges are expressed as a list of association lists (one association list for each function)
 The function is expressed as a lambda in Scheme syntax (associated to the key "function")
