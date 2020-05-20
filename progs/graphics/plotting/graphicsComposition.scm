@@ -49,8 +49,8 @@
 
 ;; Mapping on several lists is standard in Scheme
 ;; Note also https://stackoverflow.com/questions/38589238/how-to-use-map-with-a-function-that-needs-more-arguments
-(define (lineGraphicsAll graphsList auxs)
-  (let ((cList (colorListForThisPlot colorList graphsList)))
+(define (lineGraphicsAll plotsList auxs)
+  (let ((cList (colorListForThisPlot colorList plotsList)))
     (map (lambda (x y)
 	   (let ((fun (assoc-ref x "function")) 
 		 (range (assoc-ref x "range"))
@@ -59,13 +59,13 @@
 					; assoc and assoc-ref have opposite order of arguments (assoc: key, alist assoc-ref: alist key
 		 )
 	     (lineGraphics fun range lWidth dStyle y auxs)))
-	 graphsList cList)))
+	 plotsList cList)))
 
-(tm-define (functionsGraphics graphsList auxs)
+(tm-define (functionsGraphics plotsList auxs)
     (appendMult ; 2020-05-19 appendMult works on a list of lists, eliminating a set of parentheses, but is not equivalent to flatten as defined in https://stackoverflow.com/a/8387641
      (list
       `(graphics)
-      (lineGraphicsAll graphsList auxs)
+      (lineGraphicsAll plotsList auxs)
       `((with "color" "black" "line-width" "0.75ln" ,(axX auxs))
 	(with "color" "black" "line-width" "0.75ln" ,(axY auxs))
 	(with "color" "black" "line-width" "0.75ln" ,(axXUp auxs))
