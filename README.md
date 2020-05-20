@@ -51,6 +51,7 @@ The technique is as far as I understand the one suited to the Guile 1 series - f
  * User-selectable color lists
  * Exponential notation for large/small numbers
  * Error messages for wrong input
+     * Optional comments in input file (to strip away line by line)
  * Functions in standard notation
      * postpone
  * Plot list of points as well
