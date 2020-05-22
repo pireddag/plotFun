@@ -1,17 +1,17 @@
-(texmacs-module (graphics plotting plotFun)
-		(:use (graphics plotting safeModule)
-		      (graphics plotting defineFunctions)
-		      (graphics plotting graphicsComposition)
-		      (graphics plotting setPoints)
-		      (graphics plotting graphicsDefinitions)
-		      (graphics plotting setTicks)
-		      (graphics plotting inputFromFile)
-		      (graphics plotting setAxes)
-		      (graphics plotting listOperations)
-		      (graphics plotting setColors)
-		      (graphics plotting setNumbers)
-		      (graphics plotting setLabels)
-		      (graphics plotting rescaleFunctions)))
+(texmacs-module (plotFun)
+		(:use (safeModule)
+		      (defineFunctions)
+		      (graphicsComposition)
+		      (setPoints)
+		      (graphicsDefinitions)
+		      (setTicks)
+		      (inputFromFile)
+		      (setAxes)
+		      (listOperations)
+		      (setColors)
+		      (setNumbers)
+		      (setLabels)
+		      (rescaleFunctions)))
 
 ;;the rescaleFunctions module is here only for the defaults of szX and szY
 ;; the code for the defaults (and the combination of default options with user options) has to be reorganized and placed into a module
@@ -79,6 +79,7 @@
 ;;;
 
 (tm-define (plotFun definitionFile)
+	   (:secure)
   ;; (display graphsListStr)
   ;; define graphsList as
   ;; (graphsList (eval (string->read graphsListStr) (make-pure-math-module))
@@ -124,6 +125,7 @@
     ;; 	(display szYUnitsStr)
     ;;     (display (equal? szXUnitsStr "7cm"))
     ;; 	(display (equal? szYUnitsStr "5cm"))
+    (display "\nplugin version")
     (stree->tree
      `(with "gr-geometry" (tuple "geometry" ,szXUnitsStr ,szYUnitsStr "center")
 	    ,(compose-graphics graphsList)))))

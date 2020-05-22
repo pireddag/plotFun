@@ -1,9 +1,9 @@
-(texmacs-module (graphics plotting graphicsComposition)
-		(:use (graphics plotting defineFunctions)
-		      (graphics plotting setTicks)
-		      (graphics plotting setColors)
-		      (graphics plotting setNumbers)
-		      (graphics plotting rescaleFunctions)))
+(texmacs-module (graphicsComposition)
+		(:use (defineFunctions)
+		      (setTicks)
+		      (setColors)
+		      (setNumbers)
+		      (rescaleFunctions)))
 
 
 ;; A function for the rescaled points
@@ -20,16 +20,19 @@
 ;;;
 
 (tm-define (ticksXGraphics auxs)
+	   	   (:secure)
   (let ((ticksGraphicsFun
 	 (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
     (map ticksGraphicsFun (ticksXLines auxs))))
 
 (tm-define (ticksYGraphics auxs)
+	   	   (:secure)
   (let ((ticksGraphicsFun
 	 (lambda (x) `(with  "color" "black" "line-width" "0.75ln" ,x))))
     (map ticksGraphicsFun (ticksYLines auxs))))
 
 (tm-define (numbersXGraphics auxs)
+	   	   (:secure)
   (let ((numbersGraphicsFun (lambda (x) `(with  "color" "black" ,x))))
     (map numbersGraphicsFun (numbersXPoints auxs))))
 
@@ -70,6 +73,7 @@
 	 plotsList cList)))
 
 (tm-define (functionsGraphics plotsList auxs)
+	   	   (:secure)
     (appendMult ; 2020-05-19 appendMult works on a list of lists, eliminating a set of parentheses, but is not equivalent to flatten as defined in https://stackoverflow.com/a/8387641
      (list
       `(graphics)

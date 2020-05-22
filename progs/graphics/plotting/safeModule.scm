@@ -1,11 +1,12 @@
-(texmacs-module (graphics plotting safeModule)
-		(:use (graphics plotting defineFunctions)))
+(texmacs-module (safeModule)
+		(:use (defineFunctions)))
 
 
-(tm-define graphsListStr '());; initialize to empty string in order to be able to place the symbol in the "safe" module we are going to set up
+(tm-define graphsListStr  (:secure) '());; initialize to empty string in order to be able to place the symbol in the "safe" module we are going to set up
 ;; it is then possible to set it to something else (we will set it to the association list in string form) before calling eval onto it
 
 (tm-define (make-pure-math-module)
+	   	   (:secure)
   (let ((m (make-module)))
     (begin
       ;; math symbols

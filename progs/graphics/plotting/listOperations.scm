@@ -1,14 +1,17 @@
-(texmacs-module (graphics plotting listOperations))
+(texmacs-module (listOperations))
 
 (tm-define (getXList pointsList)
+	   	   (:secure)
   (cond ((null? pointsList) '())
 	(else (cons (car (car pointsList)) (getXList (cdr pointsList))))))
 
 (tm-define (getYList pointsList)
+	   	   (:secure)
   (cond ((null? pointsList) '())
 	(else (cons (cadr (car pointsList)) (getYList (cdr pointsList)))))) ; (cadr (car ...) gets the y element of the first element of the list
 
 (tm-define (listPair xList yList) ; assuming xList and yList are lists of the same length, generates the list of pairs
+	   	   (:secure)
   (cond ((null? xList) '())
 	(else (cons `(,(car xList) ,(car yList)) (listPair (cdr xList) (cdr yList))))))
 

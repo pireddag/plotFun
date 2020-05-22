@@ -1,4 +1,4 @@
-(texmacs-module  (graphics plotting graphicsDefinitions))
+(texmacs-module  (graphicsDefinitions))
 
 ;; (define pi (acos -1))
 
@@ -16,6 +16,7 @@
 
 ;; A function to define a point in the TeXmacs graphics format using a list of two elements
 (tm-define (list->pt xy)
+	   	   (:secure)
   `(point ,(number->string (car xy)) ,(number->string (cadr xy))))
 
 ;; https://www.cs.bham.ac.uk/research/projects/poplog/paradigms_lectures/lecture5.html
@@ -31,6 +32,7 @@
 ;; but it is not equivalent to flatten as defined in
 ;; https://stackoverflow.com/a/8387641
 (tm-define (appendMult lst)
+	   	   (:secure)
   (if (equal? '() lst) '()
       (append (car lst) (appendMult (cdr lst)))))
 

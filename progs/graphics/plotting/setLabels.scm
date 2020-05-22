@@ -1,8 +1,8 @@
 ;; Two functions for the pairs of points that mark the start and end of each tick
 
-(texmacs-module  (graphics plotting setLabels)
-		 (:use (graphics plotting graphicsDefinitions)
-		       (graphics plotting setAxes)))
+(texmacs-module  (setLabels)
+		 (:use (graphicsDefinitions)
+		       (setAxes)))
 
 
 ;; Need to write the placement functions (numbers and label) in a better fashion
@@ -21,6 +21,7 @@
 	 (car xLabPos)))
 
 (tm-define (xLabel auxs)
+	   	   (:secure)
 	   ;; (display "calculating x label\n")
 	   ;; (display (xLabelPos auxs))
 	   ;; (display "\n")

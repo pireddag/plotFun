@@ -1,9 +1,9 @@
 ;; Two functions for the pairs of points that mark the start and end of each tick
 
-(texmacs-module  (graphics plotting setTicks)
-		 (:use (graphics plotting graphicsDefinitions)
-		       (graphics plotting calculateTicks)
-		       (graphics plotting setAxes)))
+(texmacs-module  (setTicks)
+		 (:use (graphicsDefinitions)
+		       (calculateTicks)
+		       (setAxes)))
 
 (define (ticksXLineFun x limCoord rangeCoord factor)
   (list
@@ -50,6 +50,7 @@
 
 
 (tm-define (ticksXLines auxs)
+	   	   (:secure)
 	   (let ((ticksPtLst (ticksXPtsList auxs))
 		 (lineFun (lambda (x)
 			    (append '(line)
@@ -65,6 +66,7 @@
 ;; (display  (map lineFun ticksPtLst))
 
 (tm-define (ticksYLines auxs)
+	   	   (:secure)
 	   (let ((ticksPtLst (ticksYPtsList auxs))
 		 (lineFun (lambda (x)
 			    (append '(line)

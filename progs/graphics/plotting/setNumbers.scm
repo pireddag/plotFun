@@ -6,8 +6,8 @@
 ;;
 ;; can be used for simplifying this function
 
-(texmacs-module (graphics plotting setNumbers)
-		(:use (graphics plotting graphicsDefinitions)))
+(texmacs-module (setNumbers)
+		(:use (graphicsDefinitions)))
 
 ;;; Lists for numbers
 
@@ -35,6 +35,7 @@
 	(map numbersPointFun ticksYPos)))
 
 (tm-define (numbersXPoints auxs)
+	   	   (:secure)
   (let ((numbersPtLst (numbersXPtsList auxs))
 	(pointFun
 	 (lambda (x)
@@ -49,6 +50,7 @@
       (map pointFun numbersPtLst)))
 
 (tm-define (numbersYPoints auxs)
+	   	   (:secure)
   (let ((numbersPtLst (numbersYPtsList auxs))
 	(pointFun (lambda (x)
 		    (list 'with "text-at-valign" "center" "text-at-halign" "right"

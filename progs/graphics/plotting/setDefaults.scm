@@ -1,8 +1,9 @@
-(texmacs-module (graphics plotting setDefaults))
+(texmacs-module (setDefaults))
 
 ;;; Set defaults for the program
 
 (tm-define defaultOptions
+	   	   (:secure)
   '(
     ("sizeX" . 9)
     ("sizeY" . 6)
@@ -11,6 +12,7 @@
     ("dash-style" . "1")))
 
 (tm-define (getOption option userOptions defaultOptions)
+	   	   (:secure)
   (let ((optUser (assoc-ref userOptions option))
 	(optDefault (assoc-ref defaultOptions option)))
     ;; (display "\n")

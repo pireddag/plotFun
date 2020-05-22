@@ -1,7 +1,7 @@
 ;; next: put one tick at or before the lower limit and one at or after the upper limit of the range
 ;; function to modify is ticksList
 
-(texmacs-module  (graphics plotting calculateTicks))
+(texmacs-module  (calculateTicks))
 
 
 ;;; definitions
@@ -16,6 +16,7 @@
 ;;; Functions to calculate the ticks
 
 (tm-define (setTicks range)
+	   	   (:secure)
   (let ((tickSpacing (findTickSpacing range)))
     (calcTicks range tickSpacing)))
 

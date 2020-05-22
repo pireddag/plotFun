@@ -1,7 +1,8 @@
-(texmacs-module (graphics plotting setColors))
+(texmacs-module (setColors))
 
 ;; cycle a list
 (tm-define (cycleList lst)
+	   	   (:secure)
   (append (cdr lst) (list (car lst))))
 
 ;;(define colorList
@@ -13,10 +14,12 @@
 ;;   '("blue" "red" "green" "magenta" "cyan" "yellow"))
 
 (tm-define colorList
+	   	   (:secure)
   '("blue" "red" "green" "#007f00" "cyan" "yellow"))
 
 ;; make a list of colors as long as the list of functions by cycling through colorList
 (tm-define (colorListForThisPlot cList gList)
+	   	   (:secure)
   (if (null? gList)
       '()
       (cons (car cList) (colorListForThisPlot (cycleList cList) (cdr gList)))))

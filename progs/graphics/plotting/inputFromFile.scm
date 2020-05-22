@@ -1,4 +1,4 @@
-(texmacs-module  (graphics plotting inputFromFile))
+(texmacs-module  (inputFromFile))
 
 (define (addToStringRec dataPort str)
   (let ((lineIn (read-line dataPort)))
@@ -11,4 +11,5 @@
 
 ;; start the recursive function addToStringRec with the empty string
 (tm-define (readFile dataPort)
+	   	   (:secure)
   (addToStringRec dataPort ""))

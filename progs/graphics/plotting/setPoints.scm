@@ -4,10 +4,11 @@
 ;; !! the numbers of points to plot can be set with an option
 
 
-(texmacs-module (graphics plotting setPoints)
-		(:use (graphics plotting setDefaults)))
+(texmacs-module (setPoints)
+		(:use (setDefaults)))
 
 (tm-define (width range) ; takes for granted that the second element of range is larger than the first
+	   	   (:secure)
     (- (cadr range) (car range)))
 
 (tm-define (pts range nPoints)

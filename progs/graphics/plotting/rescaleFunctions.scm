@@ -1,14 +1,19 @@
 ;;; rescale the function to the size of the image
 
-(texmacs-module (graphics plotting rescaleFunctions)
-		(:use (graphics plotting listOperations)))
+(texmacs-module (rescaleFunctions)
+		(:use (listOperations)))
 
 ;; I need these global to use them in other functions too
 ;; they could be maybe modified to be flexible to deal with flexible windows
 ;; (probably the size of the window in the function that does the plotting needs to be defined through
 ;; the same variable)
-(tm-define szXDefault 9)
-(tm-define szYDefault 6)
+(tm-define szXDefault
+	   (:secure)
+	   9)
+
+(tm-define szYDefault
+	   (:secure)
+	   6)
 
 
 
@@ -27,6 +32,7 @@
 
 
 (tm-define (rescalePairs pointsList auxs)
+	   	   (:secure)
   (let* ((xList (getXList pointsList))
 	 (yList (getYList pointsList))
 	 (rangeX (cdr (assoc "rangeX" auxs)))
