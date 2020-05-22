@@ -39,9 +39,13 @@ I have tried to make this program safe: said this
 
 ## Desirable features
 
+The features marked with (present) are yet to be refined (result, implementation or both)
+
  * Optional user-selected
      * graph size (present)
          * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
+     * Axes labels (present) (not yet optional, has to be supplied)
+     * Graph title (present) (not yet optional, has to be supplied)
  * Optional user-selected for each plot
      * color (present)
      * line thickness (present)
