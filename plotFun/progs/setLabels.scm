@@ -11,9 +11,9 @@
 
 (tm-define (xLabel auxs)
 	   	   (:secure)
-	   (display "calculating x label\n")
-	   (display (xLabelPos auxs))
-	   (display "\n")
+	   ;; (display "calculating x label\n")
+	   ;; (display (xLabelPos auxs))
+	   ;; (display "\n")
 	   ;; Starting with `(with "color" "black"
 	   ;; is essential to get the  'with  "text-at-halign" "center" to be active
 	   (let ((xLab (assoc-ref auxs "xLabel")))
@@ -23,9 +23,9 @@
 
 (tm-define (title auxs)
 	   	   (:secure)
-	   (display "calculating title position \n")
-	   (display (titlePos auxs))
-	   (display "\n")
+	   ;; (display "calculating title position \n")
+	   ;; (display (titlePos auxs))
+	   ;; (display "\n")
 	   ;; Starting with `(with "color" "black"
 	   ;; is essential to get the  'with  "text-at-halign" "center" to be active
 	   (let ((tl (assoc-ref auxs "title")))
