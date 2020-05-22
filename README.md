@@ -24,7 +24,25 @@ A test file  (`test_plotting_Scheme_plugin.tm`) together with its input files is
 
 ## Input
 
+In the input file an association list (and only that) must be present.
+The association list contains the following keys
+  * "xLabel" (string)
+  * "xLabel" (string)
+  * "title" (string)
+  * "sizeX" (double) [optional, default 9]
+  * "sizeY" (double) [optional, default 6]
+  * "plotsList" (list of association lists, see below)
+The value of the entry with the key "plotsList" is the list of plots, which is a list of association lists. In each association list there are the following keys:
+  * "function" (a lambda expression)
+  * "range" (a list of two doubles)
+  * "nPoints" (positive integer) [optional, default 101]
+  
+Please see test input files (in directory `plotFun/doc`) for examples.
+
 The input syntax (association list) is extremely finicky, an error makes the program fail and the error messages do not indicate that the input needs to be corrected. It is necessary to improve this part.
+
+Possibly I will either change the syntax of the input file so that it is easier to type or will write a parser that will notify the user about incorrect syntax.
+
 
 ## Security
 
