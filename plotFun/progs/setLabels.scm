@@ -82,39 +82,37 @@
 	 (yLabPos     (rescalePairs `( (,(- xMin (yLabCorrect axLX))
 				      ,(/ (+ yMin yMax) 2)))
 				    auxs))  ; more far away than the x-label
-	 (xAxPos (rescalePairs `((,xMin 0)) auxs)))
+	 (xAxPos (rescalePairs `((,xMin 0)) auxs))) ; need the x-component of the scaled position of the x-axis for adjusting the label with limits - get it with the action of rescalePairs on the "artificial" position (xMin 0) which has the correct x-value 
     ;; rescalePairs gives a list, as output of this function I want the only element of this list
+    ;; pass it to a function which will limit it (so that the label is neither too close to the axis for small plots nor too far away for large plots)
     (yLabLimit (car yLabPos) (car xAxPos))))
 
 ;; Formula takes into account:
 ;; a constant distance
 ;; the size of the x-axis
-;; a maximum and minimum distance
-;; should take into account:
-;; the size of the strings for the y-label axes
-;; using default szX taken from the module rescaleFunctions
-;; the maximum and minimum distance are applied on the scaled position of the label
-;; then the distance is scaled back to the initial size, and it will be scaled again in the yLabelPos function
-;; it is necessary to simplify this function!
+;; the correction so that it stays within limits is done with the function yLabLimit which is applied to the scaled values of the y-label position at the end
 (define (yLabCorrect axLX)
  (+ (/ (width axLX) 12) .5))
 
-;; yLabPos and xAxPos are lists of two numbers
+;; Adjust so that the label is neither too close to the axis for small plots nor too far away for large plots
+;; yLabPos and xAxPos are lists of two numbers, we want to adjust only the first element (x-component of the position)
+;; 
 (define (yLabLimit yLabPos xAxPos)
   (let* ((correctMax 1.25)
 	 (correctMin 0.7)
 	 (currentShift (- (car xAxPos) (car yLabPos) )) ; positive value
 	 (limitedShift  (min correctMax (max correctMin currentShift)))
 	 (yLabXPos (- (car xAxPos) limitedShift)))
-    (display "\n")
-    (display "xAxPos\n")
-    (display (car xAxPos))
-    (display "\nyLabPos\n")
-    (display (car yLabPos))
-    (display "\ncurrentShift\n")
-    (display currentShift)
-    (display "\nlimitedShift\n")
-    (display limitedShift)
+    ;; (display "\n")
+    ;; (display "xAxPos\n")
+    ;; (display (car xAxPos))
+    ;; (display "\nyLabPos\n")
+    ;; (display (car yLabPos))
+    ;; (display "\ncurrentShift\n")
+    ;; (display currentShift)
+    ;; (display "\nlimitedShift\n")
+    ;; (display limitedShift)
+    ;; compose the y-label position using the "limited" x-position and the y-position which we already had
     `(,yLabXPos ,(cadr yLabPos))))
     
 
