@@ -22,7 +22,7 @@ There is a test file and its pdf output (`test_plotting_Scheme_working_07.tm` an
 
 ## Input
 
-The input syntax (association list) is extremely finicky, an error makes the progam fail and the error messages do not indicate that the input needs to be corrected. It is necessary to improve this part.
+The input syntax (association list) is extremely finicky, an error makes the program fail and the error messages do not indicate that the input needs to be corrected. It is necessary to improve this part.
 
 ## Security
 
