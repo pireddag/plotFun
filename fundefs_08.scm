@@ -1,5 +1,7 @@
 `(
   ("xLabel" . "x-axis lab - lines")
+  ("sizeX" . 7)
+  ("sizeY" . 5)
   ("plotsList" .
    (
     (("function" . ,(lambda (x) (+ (* x 2) -2.)))
