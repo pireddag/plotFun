@@ -1,6 +1,5 @@
 `(
   ("xLabel" . "x-axis lab - lines")
-  ("title" . "Lines")
   ("sizeX" . 7)
   ("sizeY" . 5)
   ("plotsList" .

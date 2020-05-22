@@ -1,6 +1,6 @@
 <TeXmacs|1.99.12>
 
-<style|<tuple|generic|old-dots|plotFun_working_08>>
+<style|<tuple|generic|old-dots|plotFun_plugin>>
 
 <\body>
   \ \ <doc-data|<doc-title|Plotting functions with <TeXmacs> graphics and
