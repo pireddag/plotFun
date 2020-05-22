@@ -42,13 +42,13 @@ I have tried to make this program safe: said this
 ## Desirable features
 
  * Optional user-selected
-     * graph size
+     * graph size (present)
          * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
  * Optional user-selected for each plot
-     * color
-     * line thickness
-     * line type
-     * number of points
+     * color (present)
+     * line thickness (present)
+     * line type (present)
+     * number of points (present)
  * User-selectable color lists
  * Exponential notation for large/small numbers
  * Error messages for wrong input
