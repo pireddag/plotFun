@@ -57,9 +57,11 @@
 	 (rangeY (findRangeYAll plotsList))
 	 (titl (assoc-ref graphsList "title"))
 	 (xLab (assoc-ref graphsList "xLabel"))
+	 (yLab (assoc-ref graphsList "yLabel"))
 	 (szX (assoc-ref graphsList "sizeX"))
 	 (szY (assoc-ref graphsList "sizeY"))
 	 (auxs `(("xLabel" . ,xLab)
+		 ("yLabel" . ,yLab)
 		 ("title" . ,titl)
 		 ("sizeX" . ,szX)
 		 ("sizeY" . ,szY)
@@ -78,6 +80,8 @@
       (numbersXGraphics auxs)
       (numbersYGraphics auxs)
       (xLabel auxs)
+      (yLabel auxs)
+      ;; (yLabelXDir auxs) ; Test to check the position and alignment of the y-label before rotation
       (title auxs)))))
 ;;;
 
