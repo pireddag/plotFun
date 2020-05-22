@@ -1,12 +1,11 @@
 # plotFun
 Plot functions with native TeXmacs graphics.
 
-Place the files in a subdirectory of the `plugin` directory of the TeXmacs user directory (the TeXmacs user directory could be `.TeXmacs`). Say you have called this directory `plotFun`
-The Scheme functions go in `.TeXmacs/plugins/plotFun/progs/`, the package in `.TeXmacs/plugins/plotFun/packages/`. I have already placed them in a directory with the right name and nesting, the tree needs to be copied to the `plugin` directory of TeXmacs.
+Place the files in a subdirectory of the `plugin` by copying the `plotFun` directory into it. You can change the directory name. The plugin will appear in the plugin list of TeXmacs (Document -> Style -> Add package).
 
-Load the package plotFun
+Load the package plotFun_plugin
 
-The `plotFun` command takes one arguments, the name of a file. The file contains the functions to be plotted, the range for each function, general plot options and additional options for each function (color, style, thickness); default options are subsituted for missing options.
+The `plotFun` command takes one arguments, the name of a file. The file contains the functions to be plotted, the range for each function, general plot options and additional options for each function (color, style, thickness, number of points); default options are subsituted for missing options.
 
 The functions and their ranges are expressed as a list of association lists (one association list for each function)
 The function is expressed as a lambda in Scheme syntax (associated to the key "function")
@@ -17,9 +16,11 @@ the range as a list (associated to the key "range")
 
 example: `(-2. 2.)`
 
-Please refer to the example input files `fundefs_07.scm` and `fundefs_08.scm`.
+Please refer to the example input files `fundefs_07.scm`, `fundefs_08.scm` and `fundefs_09.scm` in the `doc` directory.
 
-There is a test file and its pdf output (`test_plotting_Scheme_working_07.tm` and `test_plotting_Scheme_working_07.pdf`) in addition to the two input files
+## Test files
+
+A test file  (`test_plotting_Scheme_plugin.tm`) together with its input files is in the `doc` directory. The .pdf output (`test_plotting_Scheme_working_07.pdf`) is in the top directory.
 
 ## Input
 
