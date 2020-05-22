@@ -28,11 +28,9 @@ The input syntax (association list) is extremely finicky, an error makes the pro
 
 ## Security
 
-I have added the '':secure'' keyword to the Scheme functions, so in order to run this macro in TeXmacs it is not anymore necessary to set the security level to "Accept all scripts".
+I have added the '':secure'' keyword to the Scheme functions, so in order to run this macro in TeXmacs it is not anymore necessary to set the security level to "Accept all scripts"; the security level can be left to "Accept no scripts".
 
-Unsafe scripts could delete all the data on your hard drive.
-
-Since this TeXmacs package executes commands in a user-defined arbitrary file (the one specified in the argument to `plotFun`), it is quite dangerous: you have to ensure that the file you specify as argument contains only safe code. I have tried to mitigate the danger by defining a "safe module" with "safe commands" (see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg00963.html) in the Guile maling list). I do not know how effective the technique is, so **please be aware of what you put in the file you use as a macro argument**.
+Unsafe scripts could delete all the data on your hard drive. Since this TeXmacs package executes commands in a user-defined arbitrary file (the one specified in the argument to `plotFun`), it is quite dangerous: you have to ensure that the file you specify as argument contains only safe code. I have tried to mitigate the danger by defining a "safe module" with "safe commands" (see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg00963.html) in the Guile maling list). I do not know how effective the technique is, so **please be aware of what you put in the file you use as a macro argument**.
 
 The technique is as far as I understand the one suited to the Guile 1 series - for the Guile 2/3 series (future TeXmacs) I have seen that another technique exists, based on the `(ice-9 sandbox)` module; see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg10788.html) in the Guile maling list.
 
