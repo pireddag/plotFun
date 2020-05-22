@@ -2,18 +2,20 @@
 		(:use (graphics plotting defineFunctions)
 		      (graphics plotting setTicks)
 		      (graphics plotting setColors)
-		      (graphics plotting setNumbers)))
+		      (graphics plotting setNumbers)
+		      (graphics plotting rescaleFunctions)))
 
 
 ;; A function for the rescaled points
-(define (lineFun fun range auxs)
+(define (lineFun fun range nPoints auxs)
     ;; (display "\n")
     ;; (display range)
     ;; (display "\n")
     ;;(display  (append `(line) (map list->pt (ptlist fun))))
     ;; (append `(spline) (map list->pt (ptlist fun range)))) ; without rescaling
     ;; read file
-    (append `(spline) (map list->pt (rescalePairs (ptlist fun range) auxs))))        ; with rescaling
+  (append `(line) (map list->pt (rescalePairs (ptlist fun range nPoints) auxs))))        ; with rescaling
+;; was spline instead of line - I changed it to line as it is easier to see (from the jagged plots) when the number of points is not enough to represent well the function
 
 ;;;
 
@@ -36,16 +38,18 @@
     (map numbersGraphicsFun (numbersYPoints auxs))))
 
 
-(define (lineGraphics fun range lWidth dStyle color auxs)
+(define (lineGraphics fun range lWidth dStyle color nPoints auxs)
   (if (not lWidth)
       (set! lWidth "1.5ln")) ; if line-width is not in the association list lWidth is set to false; we set it then to "1.5ln"
   (if (not dStyle)
       (set! dStyle "11111"))
+  (if (not nPoints)
+      (set! nPoints 101))
   `(with
     "color" ,color
     "line-width" ,lWidth
     "dash-style" ,dStyle
-    ,(lineFun fun range auxs)))
+    ,(lineFun fun range nPoints auxs)))
 
 ;; Mapping on several lists is standard in Scheme
 ;; Note also https://stackoverflow.com/questions/38589238/how-to-use-map-with-a-function-that-needs-more-arguments
@@ -57,11 +61,12 @@
 		 (lWidth (assoc-ref x "line-width"))
 		 (dStyle (assoc-ref x "dash-style"))
 		 (colorThis (assoc-ref x "color"))
+		 (nPoints (assoc-ref x "nPoints"))
 					; assoc and assoc-ref have opposite order of arguments (assoc: key, alist assoc-ref: alist key
 		 )
 	     (if (not colorThis)
 		 (set! colorThis y))  ; if color is not in the association list colorThis is set to false; we set it then to the color specified by y (which is mapped to the list of colors cList)
-	     (lineGraphics fun range lWidth dStyle colorThis auxs)))
+	     (lineGraphics fun range lWidth dStyle colorThis nPoints auxs)))
 	 plotsList cList)))
 
 (tm-define (functionsGraphics plotsList auxs)

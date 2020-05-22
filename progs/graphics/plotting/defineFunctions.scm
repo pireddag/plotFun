@@ -5,7 +5,8 @@
 
 
 (texmacs-module (graphics plotting defineFunctions)
-		(:use (graphics plotting setPoints)))
+		(:use (graphics plotting setPoints)
+		      (graphics plotting setDefaults)))
 
 
 (define (pairfun fun x)
@@ -19,13 +20,13 @@
     ;; (display (fun x))
     `(,x ,(fun x)))
 
-(tm-define (funValues funString range)
-	   (map (lambda (x) (funString x)) (pts range)))
+(tm-define (funValues funString range nPoints)
+	   (map (lambda (x) (funString x)) (pts range nPoints)))
 
 ;;; List of points for plotting
-(tm-define (ptlist funString range)
+(tm-define (ptlist funString range nPoints)
 	   (let ((pairfunLocal (lambda (x) (pairfun funString x))))
-	     (map pairfunLocal (pts range))))
+	     (map pairfunLocal (pts range nPoints))))
 
 ;; all of the values of all of the functions
 (tm-define (funValuesAll graphsList)
@@ -34,8 +35,9 @@
 	   (if (null? graphsList)
 	       '()
 	       (let ((fun (cdr (assoc "function" (car graphsList))))
-		     (range (cdr (assoc "range" (car graphsList)))))
-		 (append (funValues fun range) (funValuesAll (cdr graphsList))))))
+		     (range (cdr (assoc "range" (car graphsList))))
+		     (nPoints (getOption "nPoints" (car graphsList) defaultOptions)))
+		 (append (funValues fun range nPoints) (funValuesAll (cdr graphsList))))))
 
 (tm-define (findRangeXAll graphsList) ;; should have a warning if graphsList is empty
 	   (if (null? graphsList)

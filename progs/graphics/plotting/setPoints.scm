@@ -4,18 +4,19 @@
 ;; !! the numbers of points to plot can be set with an option
 
 
-(texmacs-module (graphics plotting setPoints))
+(texmacs-module (graphics plotting setPoints)
+		(:use (graphics plotting setDefaults)))
 
 (tm-define (width range) ; takes for granted that the second element of range is larger than the first
     (- (cadr range) (car range)))
 
-(tm-define (pts range)
+(tm-define (pts range nPoints)
   (let
-      ((stp (step range)))
+      ((stp (step range nPoints)))
     (ptsList stp range)))
 
-(define (step range)
-  (/ (width range) 50)) ; set to 51 points per graph !! can be improved with an option
+(define (step range nPoints)
+    (/ (width range) nPoints)) ; default is 51 points per graph 
 
 ;; I need two procedures for the list of points,
 ;; one to calculate the margin and one to use it iteratively (as it must be always the same, i.e. it should not depend on range)

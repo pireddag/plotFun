@@ -7,8 +7,8 @@
 ;; they could be maybe modified to be flexible to deal with flexible windows
 ;; (probably the size of the window in the function that does the plotting needs to be defined through
 ;; the same variable)
-(define szX 9)
-(define szY 6)
+(tm-define szXDefault 9)
+(tm-define szYDefault 6)
 
 
 
@@ -27,10 +27,24 @@
 
 
 (tm-define (rescalePairs pointsList auxs)
-  (let ((xList (getXList pointsList))
-	(yList (getYList pointsList))
-	(rangeX (cdr (assoc "rangeX" auxs)))
-	(rangeY (cdr (assoc "rangeY" auxs)))) ; szX and szY are defined globally
+  (let* ((xList (getXList pointsList))
+	 (yList (getYList pointsList))
+	 (rangeX (cdr (assoc "rangeX" auxs)))
+	 (rangeY (cdr (assoc "rangeY" auxs)))
+	 (szXAux (assoc-ref auxs "sizeX"))
+	 (szYAux (assoc-ref auxs "sizeY"))
+	 (szX (if (not szXAux) szXDefault szXAux))
+	 (szY (if (not szYAux) szYDefault szYAux)))
+    ;; (display "\nauxs\n")
+    ;; (display auxs)
+    ;; (display "\nszXAux\n")
+    ;; (display szXAux)
+    ;; (display "\nszYAux\n")
+    ;; (display szYAux)
+    ;; (display "\nszXAux\n")
+    ;; (display szXAux)
+    ;; (display "\nszY\n")
+    ;; (display szY)
     (listPair (rescale xList szX rangeX) (rescale yList szY rangeY))))
 
 
