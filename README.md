@@ -26,17 +26,16 @@ The input syntax (association list) is extremely finicky, an error makes the pro
 
 ## Security
 
-In order to run this macro in TeXmacs it is necessary to set the security level to "Accept all scripts".
-
-**One is then responsible for making sure that his TeXmacs documents are running only safe scripts!** 
+I have added the '':secure'' keyword to the Scheme functions, so in order to run this macro in TeXmacs it is not anymore necessary to set the security level to "Accept all scripts".
 
 Unsafe scripts could delete all the data on your hard drive.
 
-Please see how to change TeXmacs security options in the TeXmacs manual (section 1, "User preferences", of the part "Configuring TeXmacs"). I am not writing it here so that a conscious effort on the part of the user is needed to change the setting.
-
-Since this TeXmacs package executes commands in a user-defined arbitrary file (the one specified in the argument to `plotFun`), it is quite dangerous: you have to ensure that the file contains only safe code. I have tried to mitigate the danger by defining a "safe module" with "safe commands" (see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg00963.html) in the Guile maling list). I do not know how effective the technique is, so please be aware of what you put in the file you use as a macro argument.
+Since this TeXmacs package executes commands in a user-defined arbitrary file (the one specified in the argument to `plotFun`), it is quite dangerous: you have to ensure that the file you specify as argument contains only safe code. I have tried to mitigate the danger by defining a "safe module" with "safe commands" (see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg00963.html) in the Guile maling list). I do not know how effective the technique is, so **please be aware of what you put in the file you use as a macro argument**.
 
 The technique is as far as I understand the one suited to the Guile 1 series - for the Guile 2/3 series (future TeXmacs) I have seen that another technique exists, based on the `(ice-9 sandbox)` module; see  this [message](https://www.mail-archive.com/guile-user@gnu.org/msg10788.html) in the Guile maling list.
+
+I have tried to make this program safe: said this
+**one is responsible for making sure that his TeXmacs documents are running only safe scripts!** 
 
 ## Desirable features
 
