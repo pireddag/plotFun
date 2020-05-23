@@ -226,8 +226,8 @@
   </big-figure>
 
   <\big-figure>
-    <plotFun|./fundefs_09.scm>\ 
-  <|big-figure>
+    <draw-over|<plotFun|./fundefs_09.scm>|<with|gr-mode|<tuple|group-edit|move>|<graphics|<line|<point|2.21920879501808|2.73227996689466>|<point|2.92426239866936|2.11269081753628>>|<text-at|<with|font-family|ss|parabola>|<point|1.24551050535785|2.87253787405742>>|<text-at|<with|font-family|ss|gaussian>|<point|-1.74561780658817|2.97936234951713>>|<line|<point|-0.876933507167769|2.83365323224318>|<point|0.085877531376992|2.38844970479229>>|<text-at|<with|font-family|ss|sinusoid>|<point|2.16423217621379|-2.2551235996825>>|<line|<point|3.10366659552045|-0.875771144964084>|<point|2.62995451375916|-1.85260551808256>>>>|0cm>
+    <|big-figure>
     The same functions of figure <reference|fig:example1> plotted with less
     points (default is 101) in a larger size.
   </big-figure>
