@@ -22,27 +22,9 @@ Please refer to the example input files `fundefs_07.scm`, `fundefs_08.scm` and `
 
 A test file  (`test_plotting_Scheme_plugin.tm`) together with its input files is in the `doc` directory. The .pdf output (`test_plotting_Scheme_working_07.pdf`) is in the top directory.
 
-## Input
+## Documentation
 
-In the input file an association list (and only that) must be present.
-The association list contains the following keys
-  * "xLabel" (string)
-  * "xLabel" (string)
-  * "title" (string)
-  * "sizeX" (double) [optional, default 9]
-  * "sizeY" (double) [optional, default 6]
-  * "plotsList" (list of association lists, see below)
-The value of the entry with the key "plotsList" is the list of plots, which is a list of association lists. In each association list there are the following keys:
-  * "function" (a lambda expression)
-  * "range" (a list of two doubles)
-  * "nPoints" (positive integer) [optional, default 101]
-  
-Please see test input files (in directory `plotFun/doc`) for examples.
-
-The input syntax (association list) is extremely finicky, an error makes the program fail and the error messages do not indicate that the input needs to be corrected. It is necessary to improve this part.
-
-Possibly I will either change the syntax of the input file so that it is easier to type or will write a parser that will notify the user about incorrect syntax.
-
+The documentation is in the `/plotFun/doc` directory. It contains a description of the input files, examples and a list of desirable features.
 
 ## Security
 
@@ -54,32 +36,3 @@ The technique is as far as I understand the one suited to the Guile 1 series - f
 
 I have tried to make this program safe: said this
 **one is responsible for making sure that his TeXmacs documents are running only safe scripts!** 
-
-## Desirable features
-
-The features marked with (present) are yet to be refined (result, implementation or both)
-
- * Optional user-selected
-     * graph size (present)
-         * This probably needs improvement in the placement of numbers and axis labels with shifts and not multiplications
-     * Axes labels (present) (not yet optional, has to be supplied)
-     * Graph title (present) (not yet optional, has to be supplied)
- * Optional user-selected for each plot
-     * color (present)
-     * line thickness (present)
-     * line type (present)
-     * number of points (present)
- * User-selectable color lists
- * Exponential notation for large/small numbers
- * Error messages for wrong input
-     * Optional comments in input file (to strip away line by line)
- * Functions in standard notation
-     * postpone
- * Plot list of points as well
-     * Probably needs code reorganization
- * Multiple panels
-     * Probably needs code reorganization
-     * Here modularity of Scheme could help
-
-
-
