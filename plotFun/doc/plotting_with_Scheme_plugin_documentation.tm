@@ -236,7 +236,7 @@
 
 <\initial>
   <\collection>
-    <associate|page-medium|papyrus>
+    <associate|page-medium|paper>
     <associate|page-screen-margin|false>
     <associate|preamble|false>
   </collection>
@@ -244,16 +244,16 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|?>>
-    <associate|auto-2|<tuple|2|?>>
-    <associate|auto-3|<tuple|3|?>>
-    <associate|auto-4|<tuple|4|?>>
-    <associate|auto-5|<tuple|5|?>>
-    <associate|auto-6|<tuple|6|?>>
-    <associate|auto-7|<tuple|1|?>>
-    <associate|auto-8|<tuple|2|?>>
-    <associate|auto-9|<tuple|3|?>>
-    <associate|fig:example1|<tuple|1|?>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|1>>
+    <associate|auto-3|<tuple|3|1>>
+    <associate|auto-4|<tuple|4|2>>
+    <associate|auto-5|<tuple|5|3>>
+    <associate|auto-6|<tuple|6|3>>
+    <associate|auto-7|<tuple|1|3>>
+    <associate|auto-8|<tuple|2|4>>
+    <associate|auto-9|<tuple|3|4>>
+    <associate|fig:example1|<tuple|1|3>>
   </collection>
 </references>
 
@@ -274,8 +274,8 @@
       <tuple|normal|<\surround|<hidden-binding|<tuple>|3>|>
         The same functions of figure <reference|fig:example1> plotted with
         less points (default is 101) in a larger size. Annotations are inked
-        over (<with|font-family|<quote|tt>|Insert -\<gtr\> Image -\<gtr\> Ink
-        here>)
+        over (<with|font-family|<quote|tt>|Insert \<rightarrow\> Image
+        \<rightarrow\> Ink here>)
       </surround>|<pageref|auto-9>>
     </associate>
     <\associate|toc>
