@@ -17,7 +17,8 @@
 	   ;; (display "\n")
 	   ;; Starting with `(with "color" "black"
 	   ;; is essential to get the  'with  "text-at-halign" "center" to be active
-	   (let ((xLab (assoc-ref auxs "xLabel")))
+		   (let* ((xLabAux (assoc-ref auxs "xLabel"))
+			  (xLab (if (not xLabAux) "" xLabAux))) ; if there is no "xLabel" in the association list of the input file, xLabAux is set to false (when composing auxs), and we set xLab to the empty string
  `(with "color" "black" ,(list 'with  "text-at-halign" "center"
 			  (list 'text-at xLab
 				(list->pt (xLabelPos auxs)))))))
@@ -42,7 +43,8 @@
 	   ;; (display "\n")
 	   ;; Starting with `(with "color" "black"
 	   ;; is essential to get the  'with  "text-at-halign" "center" to be active
-	   (let ((yLab (assoc-ref auxs "yLabel")))
+		   (let* ((yLabAux (assoc-ref auxs "yLabel"))
+			 (yLab (if (not yLabAux) "" yLabAux)))  ; if there is no "yLabel" in the association list of the input file, yLabAux is set to false (when composing auxs), and we set yLab to the empty string
 	     `(with "color" "black" ,(list 'with  "text-at-valign" "center" ; I do not understand why I need to use "text-at-valign" for the rotated label, nor around which point the rotation happens.
 					   ;; Checked with the editor: aligning is made with respect to a box which retains its horizontal and vertical axes
 			  (list 'text-at (list 'rotate "90" yLab)
@@ -56,7 +58,8 @@
 	   ;; (display "\n")
 	   ;; Starting with `(with "color" "black"
 	   ;; is essential to get the  'with  "text-at-halign" "center" to be active
-	   (let ((tl (assoc-ref auxs "title")))
+		   (let* ((tlAux (assoc-ref auxs "title"))
+			 (tl (if (not tlAux) "" tlAux)))  ; if there is no "title" in the association list of the input file, tlAux is set to false (when composing auxs), and we set tl to the empty string
  `(with "color" "black" ,(list 'with  "text-at-halign" "center"
 			  (list 'text-at tl
 				(list->pt (titlePos auxs)))))))
