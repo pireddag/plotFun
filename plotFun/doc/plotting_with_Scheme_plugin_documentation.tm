@@ -67,8 +67,9 @@
 
   A test file \ (<code*|`plotting_with_Scheme_plugin_examples.tm`>) together
   with its input files is in the <code*|/doc> directory. Its .pdf output
-  (<code*|`plotting_with_Scheme_plugin_examples.pdf`>) is both in the
-  <code*|/doc> and in the top directory.
+  (<code*|`plotting_with_Scheme_plugin_examples.pdf`>), as well as the .pdf
+  output of this document, is both in the <code*|/doc> and in the top
+  directory.
 
   <section|Input>
 
