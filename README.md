@@ -7,12 +7,12 @@ Load the package plotFun_plugin
 
 The `plotFun` command takes one arguments, the name of a file. The file contains the functions to be plotted, the range for each function, general plot options and additional options for each function (color, style, thickness, number of points); default options are subsituted for missing options.
 
-The functions and their ranges are expressed as a list of association lists (one association list for each function)
-The function is expressed as a lambda in Scheme syntax (associated to the key "function")
+The options for the graph are in an association list; the functions, their ranges and the options for plotting them are expressed as a list of association lists (one association list for each function)
+The function is expressed as a lambda in Scheme syntax (associated to the key `"function"`)
 
 example: `(lambda (x) ( - (expt x 2) 2.))`
 
-the range as a list (associated to the key "range")
+the range as a list (associated to the key `"range"`)
 
 example: `(-2. 2.)`
 
