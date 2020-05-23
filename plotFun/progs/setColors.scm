@@ -15,7 +15,13 @@
 
 (tm-define colorList
 	   	   (:secure)
-  '("blue" "red" "green" "#007f00" "cyan" "yellow"))
+		   '("blue" "red" "green" "magenta" "cyan" "yellow"))
+;; copied from gnuplot color list
+
+;; (tm-define colorList
+;; 	   	   (:secure)
+;;   '("blue" "red" "green" "#007f00" "cyan" "yellow"))
+;; experiment
 
 ;; make a list of colors as long as the list of functions by cycling through colorList
 (tm-define (colorListForThisPlot cList gList)
