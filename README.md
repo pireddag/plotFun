@@ -20,8 +20,8 @@ Please refer to the example input files `fundefs_07.scm`, `fundefs_08.scm` and `
 
 ## Documentation and test files
 
-The documentation (`.tm` and output `.pdf` files) is in the `/plotFun/doc` directory. The file `plotting_with_Scheme_plugin_documentation.tm` contains a description of the input files, examples and a list of desirable features. The input files for the examples are in the `doc` directory as well.
-The dile `plotting_with_Scheme_plugin_examples.tm` contains just the examples; its `.pdf` output (`test_plotting_Scheme_working_07.pdf`) is in the top directory.
+The documentation (`.tm` and output `.pdf` files) is in the `/plotFun/doc` directory. The file `plotting_with_Scheme_plugin_documentation.tm` contains a description of the input files, examples and a list of desirable features; there is a file with examples only (`plotting_with_Scheme_plugin_examples.tm`). The input files for the examples are in the `doc` directory as well.
+The `.pdf` output files are both in the `doc` and in the top directory.
 
 ## Security
 
