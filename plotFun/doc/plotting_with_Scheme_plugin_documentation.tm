@@ -65,9 +65,10 @@
 
   <section|Test files>
 
-  A test file \ (`test_plotting_Scheme_plugin.tm`) together with its input
-  files is in the `doc` directory. The .pdf output
-  (`test_plotting_Scheme_working_07.pdf`) is in the top directory.
+  A test file \ (<code*|`plotting_with_Scheme_plugin_examples.tm`>) together
+  with its input files is in the <code*|/doc> directory. Its .pdf output
+  (<code*|`plotting_with_Scheme_plugin_examples.pdf`>) is both in the
+  <code*|/doc> and in the top directory.
 
   <section|Input>
 
@@ -103,6 +104,15 @@
     <item><code*|"range"> (a list of two doubles)
 
     <item><code*|"nPoints"> (positive integer) [optional, default 101]
+
+    <item><code*|"color"> (either a name or an HTML code) [optional, defaults
+    to the color list]
+
+    <item><code*|"line-width"> (string containing a number and units)
+    [optional, default <code*|"1.5ln">]
+
+    <item><code*|"dash-style"> (string containing ones and zeros) [optional,
+    default <code*|"11111">]
   </itemize>
 
   Please see test input files (in directory <code*|plotFun/doc>) for
@@ -235,10 +245,10 @@
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|3|1>>
     <associate|auto-4|<tuple|4|2>>
-    <associate|auto-5|<tuple|5|2>>
+    <associate|auto-5|<tuple|5|3>>
     <associate|auto-6|<tuple|6|3>>
     <associate|auto-7|<tuple|1|3>>
-    <associate|auto-8|<tuple|2|3>>
+    <associate|auto-8|<tuple|2|4>>
     <associate|auto-9|<tuple|3|4>>
     <associate|fig:example1|<tuple|1|3>>
   </collection>
