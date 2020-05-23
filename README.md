@@ -18,13 +18,10 @@ example: `(-2. 2.)`
 
 Please refer to the example input files `fundefs_07.scm`, `fundefs_08.scm` and `fundefs_09.scm` in the `doc` directory.
 
-## Test files
+## Documentation and test files
 
-A test file  (`test_plotting_Scheme_plugin.tm`) together with its input files is in the `doc` directory. The .pdf output (`test_plotting_Scheme_working_07.pdf`) is in the top directory.
-
-## Documentation
-
-The documentation is in the `/plotFun/doc` directory. It contains a description of the input files, examples and a list of desirable features.
+The documentation (`.tm` and output `.pdf` files) is in the `/plotFun/doc` directory. The file `plotting_with_Scheme_plugin_documentation.tm` contains a description of the input files, examples and a list of desirable features. The input files for the examples are in the `doc` directory as well.
+The dile `plotting_with_Scheme_plugin_examples.tm` contains just the examples; its `.pdf` output (`test_plotting_Scheme_working_07.pdf`) is in the top directory.
 
 ## Security
 
